@@ -6,15 +6,28 @@
     color: #c9d1d9;
 }
 
-.markdown-body > *:first-child {
+.markdown-body img {
+    max-width: 100%;
+    box-sizing: content-box;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+/* Specific Badge Spacing */
+.markdown-body p img {
+    margin-right: 4px;
+    margin-bottom: 4px;
+}
+
+.markdown-body>*:first-child {
     margin-top: 0 !important;
 }
 
-.markdown-body h1, 
-.markdown-body h2, 
-.markdown-body h3, 
-.markdown-body h4, 
-.markdown-body h5, 
+.markdown-body h1,
+.markdown-body h2,
+.markdown-body h3,
+.markdown-body h4,
+.markdown-body h5,
 .markdown-body h6 {
     margin-top: 24px;
     margin-bottom: 16px;
@@ -22,12 +35,29 @@
     line-height: 1.25;
 }
 
-.markdown-body h1 { font-size: 2em; padding-bottom: 0.3em; border-bottom: 1px solid #30363d; }
-.markdown-body h2 { font-size: 1.5em; padding-bottom: 0.3em; border-bottom: 1px solid #30363d; }
-.markdown-body h3 { font-size: 1.25em; }
-.markdown-body h4 { font-size: 1em; }
+.markdown-body h1 {
+    font-size: 2em;
+    padding-bottom: 0.3em;
+    border-bottom: 1px solid #30363d;
+}
 
-.markdown-body p { margin-bottom: 16px; }
+.markdown-body h2 {
+    font-size: 1.5em;
+    padding-bottom: 0.3em;
+    border-bottom: 1px solid #30363d;
+}
+
+.markdown-body h3 {
+    font-size: 1.25em;
+}
+
+.markdown-body h4 {
+    font-size: 1em;
+}
+
+.markdown-body p {
+    margin-bottom: 16px;
+}
 
 .markdown-body a {
     color: #58a6ff;
@@ -38,16 +68,23 @@
     text-decoration: underline;
 }
 
-.markdown-body ul, 
+.markdown-body ul,
 .markdown-body ol {
     margin-bottom: 16px;
     padding-left: 2em;
 }
 
-.markdown-body ul { list-style-type: disc; }
-.markdown-body ol { list-style-type: decimal; }
+.markdown-body ul {
+    list-style-type: disc;
+}
 
-.markdown-body li { margin-top: 0.25em; }
+.markdown-body ol {
+    list-style-type: decimal;
+}
+
+.markdown-body li {
+    margin-top: 0.25em;
+}
 
 .markdown-body code {
     padding: 0.2em 0.4em;
@@ -88,7 +125,7 @@
     border-collapse: collapse;
 }
 
-.markdown-body th, 
+.markdown-body th,
 .markdown-body td {
     padding: 6px 13px;
     border: 1px solid #30363d;
@@ -128,4 +165,36 @@
 
 ::-webkit-scrollbar-thumb:hover {
     background-color: #484f58;
+}
+
+/* Modal Animations */
+#section-modal {
+    transition: opacity 0.2s ease-out;
+}
+
+#section-modal.hidden {
+    display: none;
+    opacity: 0;
+    pointer-events: none;
+}
+
+#section-modal:not(.hidden) {
+    display: flex;
+    opacity: 1;
+}
+
+.modal-content {
+    animation: modal-slide-up 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes modal-slide-up {
+    from {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
 }
