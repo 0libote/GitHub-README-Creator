@@ -1,0 +1,18 @@
+{
+  "name": "github-readme-creator",
+  "version": "1.1.0",
+  "description": "A modern web application to create beautiful GitHub README files.",
+  "main": "index.html",
+  "scripts": {
+    "start": "echo 'Open index.html in your browser' && exit 0",
+    "deploy": "gh-pages -d ."
+  },
+  "dependencies": {
+    "gh-pages": "^6.1.1"
+  },
+  "devDependencies": {
+    "tailwindcss": "latest"
+  },
+  "author": "0libote",
+  "license": "MIT"
+}

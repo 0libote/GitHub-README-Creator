@@ -5,16 +5,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GitHub README Creator</title>
+    <!-- Dependencies via CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/11.1.1/marked.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.0.8/purify.min.js"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+
     <link rel="stylesheet" href="style.css">
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
         rel="stylesheet">
+
     <script>
         tailwind.config = {
             darkMode: 'class',
@@ -23,6 +26,7 @@
                     colors: {
                         github: {
                             dark: '#0d1117',
+                            light: '#ffffff',
                             border: '#30363d',
                             header: '#161b22',
                             text: '#c9d1d9',
@@ -42,14 +46,16 @@
     </script>
 </head>
 
-<body class="bg-github-dark text-github-text font-sans h-screen flex flex-col overflow-hidden">
+<body
+    class="bg-github-dark text-github-text font-sans h-screen flex flex-col overflow-hidden transition-colors duration-200">
     <!-- Header -->
-    <header class="bg-github-header border-b border-github-border px-6 py-3 flex items-center justify-between shrink-0">
+    <header
+        class="bg-github-header border-b border-github-border px-6 py-3 flex items-center justify-between shrink-0 z-40">
         <div class="flex items-center gap-3">
             <i data-lucide="github" class="w-8 h-8"></i>
-            <h1 class="text-lg font-semibold">README Creator</h1>
+            <h1 class="text-lg font-semibold hidden sm:block">README Creator</h1>
         </div>
-        <div class="flex items-center gap-3">
+        <div class="flex items-center gap-2 sm:gap-3">
             <button id="theme-toggle" class="p-2 hover:bg-github-btn rounded-md transition-colors text-github-muted"
                 title="Toggle Theme">
                 <i data-lucide="sun" id="theme-icon-sun" class="w-5 h-5 hidden"></i>
@@ -57,102 +63,140 @@
             </button>
             <button id="copy-btn"
                 class="flex items-center gap-2 px-3 py-1.5 bg-github-btn hover:bg-github-btnHover border border-github-border rounded-md text-sm font-medium transition-colors">
-                <i data-lucide="copy" class="w-4 h-4"></i>
-                Copy
+                <i data-lucide="copy" class="w-4 h-4 text-github-muted"></i>
+                <span>Copy</span>
             </button>
             <button id="download-btn"
-                class="flex items-center gap-2 px-3 py-1.5 bg-[#238636] hover:bg-[#2ea043] text-white rounded-md text-sm font-medium transition-colors">
+                class="flex items-center gap-2 px-3 py-1.5 bg-[#238636] hover:bg-[#2ea043] text-white rounded-md text-sm font-medium transition-colors shadow-lg">
                 <i data-lucide="download" class="w-4 h-4"></i>
-                Download
+                <span class="hidden xs:inline">Download</span>
             </button>
         </div>
     </header>
 
     <!-- Main Content -->
-    <main class="flex flex-1 overflow-hidden">
+    <main class="flex flex-1 overflow-hidden relative">
         <!-- Sidebar -->
-        <aside class="w-64 bg-github-header border-r border-github-border flex flex-col shrink-0">
-            <div class="p-4 border-bottom border-github-border">
-                <h2 class="text-xs font-semibold text-github-muted uppercase tracking-wider mb-4">Sections</h2>
-                <div id="sections-list" class="space-y-1">
-                    <!-- Section buttons will be injected here -->
+        <aside class="w-64 bg-github-header border-r border-github-border flex flex-col shrink-0 hidden md:flex">
+            <div class="p-4 flex-1 overflow-y-auto custom-scrollbar">
+                <h2 class="text-[10px] font-bold text-github-muted uppercase tracking-[0.2em] mb-4">README Sections</h2>
+                <div id="sections-list" class="space-y-4">
+                    <!-- Categories and buttons will be injected here -->
                 </div>
             </div>
-            <div class="mt-auto p-4 border-t border-github-border">
+            <div class="p-4 border-t border-github-border bg-github-header/50">
                 <button id="clear-btn"
-                    class="w-full flex items-center justify-center gap-2 px-3 py-2 text-github-muted hover:text-red-400 transition-colors text-sm">
+                    class="w-full flex items-center justify-center gap-2 px-3 py-2 text-github-muted hover:text-red-400 hover:bg-red-400/10 rounded-md transition-all text-sm">
                     <i data-lucide="trash-2" class="w-4 h-4"></i>
-                    Clear Editor
+                    Clear All Content
                 </button>
             </div>
         </aside>
 
-        <!-- Editor Area -->
-        <div class="flex-1 flex flex-col border-r border-github-border">
-            <div
-                class="bg-github-dark px-4 py-2 border-b border-github-border flex items-center justify-between text-xs text-github-muted">
-                <span>Markdown Editor</span>
-                <span id="char-count">0 characters</span>
+        <!-- Split Panes -->
+        <div class="flex-1 flex flex-col sm:flex-row overflow-hidden">
+            <!-- Editor Area -->
+            <div class="flex-1 flex flex-col border-r border-github-border bg-github-dark min-w-0">
+                <div
+                    class="bg-github-header/30 px-4 py-2 border-b border-github-border flex items-center justify-between text-[11px] font-medium text-github-muted">
+                    <div class="flex items-center gap-2">
+                        <i data-lucide="edit-3" class="w-3.5 h-3.5"></i>
+                        EDITOR
+                    </div>
+                    <span id="char-count">0 characters</span>
+                </div>
+                <textarea id="markdown-input"
+                    class="flex-1 bg-github-dark p-6 resize-none outline-none font-mono text-sm leading-relaxed custom-scrollbar focus:ring-0"
+                    placeholder="Start building your README... Select a section from the sidebar or type here."></textarea>
             </div>
-            <textarea id="markdown-input"
-                class="flex-1 bg-github-dark p-6 resize-none outline-none font-mono text-sm leading-relaxed"
-                placeholder="Start typing your README contents here or select a section from the sidebar..."></textarea>
-        </div>
 
-        <!-- Preview Area -->
-        <div class="flex-1 flex flex-col bg-github-dark overflow-hidden">
-            <div
-                class="bg-github-dark px-4 py-2 border-b border-github-border flex items-center text-xs text-github-muted">
-                <span>GitHub Preview</span>
-            </div>
-            <div id="markdown-preview" class="flex-1 overflow-y-auto p-8 markdown-body">
-                <!-- Preview content will be rendered here -->
+            <!-- Preview Area -->
+            <div class="flex-1 flex flex-col bg-github-dark min-w-0">
+                <div
+                    class="bg-github-header/30 px-4 py-2 border-b border-github-border flex items-center text-[11px] font-medium text-github-muted">
+                    <div class="flex items-center gap-2">
+                        <i data-lucide="eye" class="w-3.5 h-3.5"></i>
+                        GITHUB PREVIEW
+                    </div>
+                </div>
+                <div id="markdown-preview" class="flex-1 overflow-y-auto p-6 sm:p-10 markdown-body custom-scrollbar">
+                    <!-- Preview content injected here -->
+                </div>
             </div>
         </div>
     </main>
 
-    <!-- Footer / Status Bar (Optional) -->
-
     <!-- Section Preview Modal -->
     <div id="section-modal"
-        class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        class="fixed inset-0 bg-black/70 backdrop-blur-md z-50 hidden items-center justify-center p-4 transition-opacity duration-300">
         <div
-            class="bg-github-header border border-github-border rounded-xl w-full max-w-2xl shadow-2xl flex flex-col max-h-[90vh]">
-            <div class="p-4 border-b border-github-border flex items-center justify-between">
-                <h3 id="modal-title" class="text-lg font-semibold capitalize">Section Preview</h3>
-                <button id="close-modal" class="p-1 hover:bg-github-btn rounded-md transition-colors">
+            class="modal-content bg-github-header border border-github-border rounded-xl w-full max-w-3xl shadow-[0_20px_50px_rgba(0,0,0,0.5)] flex flex-col max-h-[90vh]">
+            <!-- Modal Header -->
+            <div
+                class="p-5 border-b border-github-border flex items-center justify-between bg-github-header rounded-t-xl">
+                <div class="flex items-center gap-3">
+                    <div class="p-2 bg-github-accent/10 rounded-lg text-github-accent">
+                        <i data-lucide="layout" class="w-5 h-5"></i>
+                    </div>
+                    <h3 id="modal-title" class="text-lg font-bold">Section Preview</h3>
+                </div>
+                <button id="close-modal"
+                    class="p-2 hover:bg-github-btn rounded-lg transition-colors text-github-muted hover:text-github-text">
                     <i data-lucide="x" class="w-5 h-5"></i>
                 </button>
             </div>
 
-            <div class="flex-1 overflow-y-auto p-6 space-y-4">
-                <div class="space-y-2">
-                    <label class="text-xs font-medium text-github-muted uppercase">Live Preview</label>
+            <!-- Modal Body -->
+            <div class="flex-1 overflow-y-auto p-6 space-y-8 custom-scrollbar">
+                <!-- Live Preview Section -->
+                <div class="space-y-3">
+                    <div class="flex items-center justify-between">
+                        <label class="text-[10px] font-bold text-github-muted uppercase tracking-wider">Live
+                            Preview</label>
+                        <span class="text-[10px] text-github-muted bg-github-btn px-2 py-0.5 rounded">Rendered
+                            Markdown</span>
+                    </div>
                     <div id="modal-preview"
-                        class="p-4 bg-github-dark border border-github-border rounded-lg markdown-body min-h-[100px]">
+                        class="p-6 bg-github-dark border border-github-border rounded-xl markdown-body shadow-inner min-h-[120px]">
                     </div>
                 </div>
 
-                <div class="space-y-2">
-                    <label class="text-xs font-medium text-github-muted uppercase">Customize Content</label>
+                <!-- Editor Section -->
+                <div class="space-y-3">
+                    <div class="flex items-center justify-between">
+                        <label class="text-[10px] font-bold text-github-muted uppercase tracking-wider">Customize
+                            Template</label>
+                        <button id="modal-clear-btn" class="text-[10px] text-red-400 hover:underline">Clear
+                            Text</button>
+                    </div>
                     <textarea id="modal-editor"
-                        class="w-full bg-github-dark border border-github-border rounded-lg p-4 font-mono text-sm min-h-[200px] outline-none focus:border-github-accent transition-colors"></textarea>
+                        class="w-full bg-github-dark border border-github-border rounded-xl p-4 font-mono text-sm min-h-[180px] outline-none shadow-inner transition-all duration-200"
+                        spellcheck="false"></textarea>
                 </div>
             </div>
 
-            <div class="p-4 border-t border-github-border flex items-center justify-end gap-3">
+            <!-- Modal Footer -->
+            <div
+                class="p-5 border-t border-github-border flex flex-col sm:flex-row items-center justify-end gap-3 bg-github-header rounded-b-xl">
                 <button id="modal-copy-btn"
-                    class="flex items-center gap-2 px-4 py-2 bg-github-btn hover:bg-github-btnHover border border-github-border rounded-md text-sm font-medium transition-colors">
+                    class="w-full sm:w-auto flex items-center justify-center gap-2 px-5 py-2.5 bg-github-btn hover:bg-github-btnHover border border-github-border rounded-lg text-sm font-semibold transition-all">
                     <i data-lucide="copy" class="w-4 h-4"></i>
                     Copy to Clipboard
                 </button>
                 <button id="insert-btn"
-                    class="flex items-center gap-2 px-4 py-2 bg-github-accent hover:bg-blue-600 text-white rounded-md text-sm font-medium transition-colors">
-                    <i data-lucide="plus" class="w-4 h-4"></i>
+                    class="w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-2.5 bg-github-accent hover:bg-blue-600 text-white rounded-lg text-sm font-bold transition-all transform hover:scale-[1.02] active:scale-[0.98] shadow-lg shadow-github-accent/20">
+                    <i data-lucide="plus-circle" class="w-4 h-4"></i>
                     Insert into README
                 </button>
             </div>
         </div>
+    </div>
+
+    <!-- Feedback Toast -->
+    <div id="toast"
+        class="fixed bottom-6 left-1/2 -translate-x-1/2 px-6 py-3 bg-github-btn border border-github-border rounded-full shadow-2xl z-50 flex items-center gap-3 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none">
+        <i data-lucide="check-circle-2" class="w-5 h-5 text-green-500"></i>
+        <span id="toast-message" class="text-sm font-medium">Message here</span>
     </div>
 
     <script src="app.js"></script>
