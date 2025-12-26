@@ -1,0 +1,375 @@
+import React, { useState, useRef } from 'react';
+
+const App = () => {
+  const [markdown, setMarkdown] = useState('# My Project\n\nA brief description of your project goes here.\n\n## Table of Contents\n- [Installation](#installation)\n- [Usage](#usage)\n- [License](#license)\n\n## Installation\n\n```bash\nnpm install\n```\n\n## Usage\n\nDescribe how to use your project.\n\n## License\n\nMIT');
+  
+  const [showBadgeModal, setShowBadgeModal] = useState(false);
+  const [showSectionModal, setShowSectionModal] = useState(false);
+  const [selectedBadge, setSelectedBadge] = useState('');
+  const [selectedSection, setSelectedSection] = useState('');
+  const [isEditorFullscreen, setIsEditorFullscreen] = useState(false);
+  const [isPreviewFullscreen, setIsPreviewFullscreen] = useState(false);
+  const fileInputRef = useRef(null);
+
+  const handleDownload = () => {
+    const element = document.createElement('a');
+    const file = new Blob([markdown], { type: 'text/markdown' });
+    element.href = URL.createObjectURL(file);
+    element.download = 'README.md';
+    document.body.appendChild(element);
+    element.click();
+    document.body.removeChild(element);
+  };
+
+  const handleFileUpload = (event) => {
+    const file = event.target.files[0];
+    if (file && file.type === 'text/markdown') {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        setMarkdown(e.target.result);
+      };
+      reader.readAsText(file);
+    }
+  };
+
+  const insertTemplate = (template) => {
+    const cursorPosition = markdown.length;
+    const newMarkdown = markdown.substring(0, cursorPosition) + template + markdown.substring(cursorPosition);
+    setMarkdown(newMarkdown);
+  };
+
+  const copyToClipboard = (text) => {
+    navigator.clipboard.writeText(text);
+  };
+
+  const badgeTemplates = [
+    { name: 'GitHub License', template: '[![License](https://img.shields.io/github/license/username/repo)](https://github.com/username/repo/blob/main/LICENSE)' },
+    { name: 'GitHub Issues', template: '[![Issues](https://img.shields.io/github/issues/username/repo)](https://github.com/username/repo/issues)' },
+    { name: 'GitHub Stars', template: '[![Stars](https://img.shields.io/github/stars/username/repo)](https://github.com/username/repo)' },
+    { name: 'Build Status', template: '[![Build Status](https://img.shields.io/github/actions/workflow/status/username/repo/test.yml?branch=main)](https://github.com/username/repo/actions)' }
+  ];
+
+  const sectionTemplates = [
+    { name: 'Badges Section', template: '## Badges\n\n<!-- Add badges here -->\n' },
+    { name: 'Installation', template: '## Installation\n\n```bash\nnpm install\n```\n' },
+    { name: 'Usage', template: '## Usage\n\nDescribe how to use your project.\n' },
+    { name: 'Contributing', template: '## Contributing\n\nContributions are welcome! Please open an issue or submit a pull request.\n' },
+    { name: 'License', template: '## License\n\nMIT\n' }
+  ];
+
+  // Enhanced markdown to HTML converter that mimics GitHub styling
+  const convertMarkdownToHtml = (md) => {
+    let html = md;
+
+    // Convert headers with proper IDs for GitHub-style anchors
+    html = html.replace(/^### (.*$)/gim, '<h3 id="$1" class="text-lg font-semibold mt-6 mb-3 text-gray-200 border-b border-gray-700 pb-1">$1</h3>');
+    html = html.replace(/^## (.*$)/gim, '<h2 id="$1" class="text-xl font-semibold mt-8 mb-4 text-gray-200 border-b border-gray-700 pb-1">$1</h2>');
+    html = html.replace(/^# (.*$)/gim, '<h1 id="$1" class="text-2xl font-bold mt-0 mb-4 text-white">$1</h1>');
+
+    // Convert bold
+    html = html.replace(/\*\*(.*?)\*\*/gim, '<strong class="font-semibold">$1</strong>');
+
+    // Convert italic
+    html = html.replace(/\*(.*?)\*/gim, '<em class="italic">$1</em>');
+
+    // Convert links
+    html = html.replace(/\[(.*?)\]\((.*?)\)/gim, '<a href="$2" class="text-blue-400 hover:text-blue-300 underline break-words">$1</a>');
+
+    // Convert inline code
+    html = html.replace(/`(.*?)`/gim, '<code class="bg-gray-800 text-green-400 px-1.5 py-0.5 rounded text-sm font-mono border border-gray-700">$1</code>');
+
+    // Convert code blocks
+    html = html.replace(/```([\s\S]*?)```/gim, '<pre class="bg-gray-900 text-green-400 p-4 rounded-lg overflow-x-auto my-4 border border-gray-700"><code class="font-mono text-sm">$1</code></pre>');
+
+    // Convert unordered lists
+    html = html.replace(/^\s*-\s+(.*$)/gim, '<li class="ml-6 my-1">$1</li>');
+    html = html.replace(/(<li class="ml-6 my-1">.*<\/li>)/gs, '<ul class="list-disc my-4">$1</ul>');
+
+    // Convert line breaks
+    html = html.replace(/\n/gim, '<br />');
+
+    // Replace multiple breaks with proper spacing
+    html = html.replace(/(<br \/>){2,}/gim, '<br /><br />');
+
+    return html;
+  };
+
+  return (
+    <div className="min-h-screen bg-gray-900 text-gray-100">
+      {/* Header */}
+      <header className="bg-gray-800 border-b border-gray-700">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center py-4">
+            <div className="flex items-center">
+              <div className="bg-gray-700 text-white p-2 rounded-lg">
+                <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
+                </svg>
+              </div>
+              <h1 className="ml-3 text-xl font-bold text-white">GitHub README Creator</h1>
+            </div>
+            <div className="flex space-x-3">
+              <input
+                type="file"
+                ref={fileInputRef}
+                onChange={handleFileUpload}
+                accept=".md,.markdown"
+                className="hidden"
+              />
+              <button
+                onClick={() => fileInputRef.current.click()}
+                className="px-4 py-2 text-sm font-medium text-gray-300 bg-gray-700 border border-gray-600 rounded-md hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors"
+              >
+                Upload
+              </button>
+              <button
+                onClick={handleDownload}
+                className="px-4 py-2 text-sm font-medium text-white bg-blue-600 border border-transparent rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors"
+              >
+                Download README.md
+              </button>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          {/* Editor Panel */}
+          <div className="space-y-4">
+            <div className={`bg-gray-800 rounded-lg border border-gray-700 shadow-sm overflow-hidden ${isEditorFullscreen ? 'fixed inset-0 z-50 m-0 rounded-none' : ''}`}>
+              <div className="px-4 py-3 bg-gray-700 border-b border-gray-600 flex justify-between items-center">
+                <h2 className="text-lg font-medium text-white">Editor</h2>
+                <div className="flex space-x-2">
+                  <button
+                    onClick={() => setIsEditorFullscreen(!isEditorFullscreen)}
+                    className="text-gray-400 hover:text-white"
+                  >
+                    {isEditorFullscreen ? (
+                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                      </svg>
+                    ) : (
+                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5v-4m0 0h-4m4 0l-5-5" />
+                      </svg>
+                    )}
+                  </button>
+                </div>
+              </div>
+              <div className="p-4">
+                <textarea
+                  value={markdown}
+                  onChange={(e) => setMarkdown(e.target.value)}
+                  className="w-full h-96 p-4 bg-gray-900 text-white border border-gray-600 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 font-mono text-sm resize-none overflow-auto"
+                  placeholder="Start writing your README here..."
+                />
+              </div>
+            </div>
+
+            {/* Templates */}
+            <div className="bg-gray-800 rounded-lg border border-gray-700 shadow-sm overflow-hidden">
+              <div className="px-4 py-3 bg-gray-700 border-b border-gray-600">
+                <h3 className="text-lg font-medium text-white">Quick Templates</h3>
+              </div>
+              <div className="p-4 space-y-4">
+                <div>
+                  <h4 className="text-sm font-medium text-gray-300 mb-2">Badges</h4>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                    {badgeTemplates.map((badge, index) => (
+                      <button
+                        key={index}
+                        onClick={() => {
+                          setSelectedBadge(badge.template);
+                          setShowBadgeModal(true);
+                        }}
+                        className="text-left px-3 py-2 bg-gray-700 hover:bg-gray-600 rounded-md transition-colors text-gray-200 text-sm font-medium border border-gray-600 hover:border-gray-500"
+                        title={badge.name}
+                      >
+                        {badge.name}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+                
+                <div>
+                  <h4 className="text-sm font-medium text-gray-300 mb-2">Sections</h4>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                    {sectionTemplates.map((section, index) => (
+                      <button
+                        key={index}
+                        onClick={() => {
+                          setSelectedSection(section.template);
+                          setShowSectionModal(true);
+                        }}
+                        className="text-left px-3 py-2 bg-gray-700 hover:bg-gray-600 rounded-md transition-colors text-gray-200 text-sm font-medium border border-gray-600 hover:border-gray-500"
+                        title={section.name}
+                      >
+                        {section.name}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Preview Panel */}
+          <div className="space-y-4">
+            <div className={`bg-gray-800 rounded-lg border border-gray-700 shadow-sm overflow-hidden ${isPreviewFullscreen ? 'fixed inset-0 z-50 m-0 rounded-none' : ''}`}>
+              <div className="px-4 py-3 bg-gray-700 border-b border-gray-600 flex justify-between items-center">
+                <h2 className="text-lg font-medium text-white">Preview</h2>
+                <div className="flex space-x-2">
+                  <button
+                    onClick={() => setIsPreviewFullscreen(!isPreviewFullscreen)}
+                    className="text-gray-400 hover:text-white"
+                  >
+                    {isPreviewFullscreen ? (
+                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                      </svg>
+                    ) : (
+                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5v-4m0 0h-4m4 0l-5-5" />
+                      </svg>
+                    )}
+                  </button>
+                </div>
+              </div>
+              <div className="p-6 max-h-[500px] overflow-y-auto">
+                <div className="prose max-w-none text-gray-200">
+                  <div dangerouslySetInnerHTML={{ __html: convertMarkdownToHtml(markdown) }} />
+                </div>
+              </div>
+            </div>
+
+            {/* Markdown Guide */}
+            <div className="bg-gray-800 rounded-lg border border-gray-700 shadow-sm overflow-hidden">
+              <div className="px-4 py-3 bg-gray-700 border-b border-gray-600">
+                <h3 className="text-lg font-medium text-white">Markdown Guide</h3>
+              </div>
+              <div className="p-4 text-sm text-gray-300">
+                <ul className="space-y-2">
+                  <li><code className="bg-gray-700 px-1 rounded text-green-400"># Heading 1</code></li>
+                  <li><code className="bg-gray-700 px-1 rounded text-green-400">## Heading 2</code></li>
+                  <li><code className="bg-gray-700 px-1 rounded text-green-400">**Bold**</code></li>
+                  <li><code className="bg-gray-700 px-1 rounded text-green-400">*Italic*</code></li>
+                  <li><code className="bg-gray-700 px-1 rounded text-green-400">[Link](url)</code></li>
+                  <li><code className="bg-gray-700 px-1 rounded text-green-400">![Image](url)</code></li>
+                  <li><code className="bg-gray-700 px-1 rounded text-green-400">`inline code`</code></li>
+                  <li><code className="bg-gray-700 px-1 rounded text-green-400">```code block```</code></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Badge Modal */}
+      {showBadgeModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+          <div className="bg-gray-800 rounded-lg border border-gray-700 shadow-xl max-w-2xl w-full max-h-96 overflow-hidden">
+            <div className="px-6 py-4 border-b border-gray-700 flex justify-between items-center">
+              <h3 className="text-lg font-medium text-white">Badge Template</h3>
+              <button
+                onClick={() => setShowBadgeModal(false)}
+                className="text-gray-400 hover:text-white"
+              >
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+            <div className="p-6 overflow-y-auto">
+              <div className="mb-4">
+                <label className="block text-sm font-medium text-gray-300 mb-2">Preview</label>
+                <div className="bg-gray-900 p-4 rounded-lg">
+                  <div dangerouslySetInnerHTML={{ __html: convertMarkdownToHtml(selectedBadge) }} />
+                </div>
+              </div>
+              <div className="mb-4">
+                <label className="block text-sm font-medium text-gray-300 mb-2">Markdown</label>
+                <textarea
+                  value={selectedBadge}
+                  onChange={(e) => setSelectedBadge(e.target.value)}
+                  className="w-full h-32 p-3 bg-gray-900 text-white border border-gray-600 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 font-mono text-sm resize-none overflow-auto"
+                />
+              </div>
+              <div className="flex justify-end space-x-3">
+                <button
+                  onClick={() => copyToClipboard(selectedBadge)}
+                  className="px-4 py-2 text-sm font-medium text-white bg-green-600 border border-transparent rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-colors"
+                >
+                  Copy
+                </button>
+                <button
+                  onClick={() => {
+                    insertTemplate(selectedBadge);
+                    setShowBadgeModal(false);
+                  }}
+                  className="px-4 py-2 text-sm font-medium text-white bg-blue-600 border border-transparent rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors"
+                >
+                  Insert
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Section Modal */}
+      {showSectionModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+          <div className="bg-gray-800 rounded-lg border border-gray-700 shadow-xl max-w-2xl w-full max-h-96 overflow-hidden">
+            <div className="px-6 py-4 border-b border-gray-700 flex justify-between items-center">
+              <h3 className="text-lg font-medium text-white">Section Template</h3>
+              <button
+                onClick={() => setShowSectionModal(false)}
+                className="text-gray-400 hover:text-white"
+              >
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+            <div className="p-6 overflow-y-auto">
+              <div className="mb-4">
+                <label className="block text-sm font-medium text-gray-300 mb-2">Preview</label>
+                <div className="bg-gray-900 p-4 rounded-lg">
+                  <div dangerouslySetInnerHTML={{ __html: convertMarkdownToHtml(selectedSection) }} />
+                </div>
+              </div>
+              <div className="mb-4">
+                <label className="block text-sm font-medium text-gray-300 mb-2">Markdown</label>
+                <textarea
+                  value={selectedSection}
+                  onChange={(e) => setSelectedSection(e.target.value)}
+                  className="w-full h-32 p-3 bg-gray-900 text-white border border-gray-600 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 font-mono text-sm resize-none overflow-auto"
+                />
+              </div>
+              <div className="flex justify-end space-x-3">
+                <button
+                  onClick={() => copyToClipboard(selectedSection)}
+                  className="px-4 py-2 text-sm font-medium text-white bg-green-600 border border-transparent rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-colors"
+                >
+                  Copy
+                </button>
+                <button
+                  onClick={() => {
+                    insertTemplate(selectedSection);
+                    setShowSectionModal(false);
+                  }}
+                  className="px-4 py-2 text-sm font-medium text-white bg-blue-600 border border-transparent rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors"
+                >
+                  Insert
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default App;
