@@ -49,47 +49,49 @@ const categories = [
     }
 ];
 
-// UI Reference
-const ui = {
-    editor: document.getElementById('markdown-input'),
-    preview: document.getElementById('markdown-preview'),
-    sectionsList: document.getElementById('sections-list'),
-    charCount: document.getElementById('char-count'),
-    copyBtn: document.getElementById('copy-btn'),
-    downloadBtn: document.getElementById('download-btn'),
-    clearBtn: document.getElementById('clear-btn'),
-
-    modal: document.getElementById('section-modal'),
-    modalTitle: document.getElementById('modal-title'),
-    modalSubtitle: document.getElementById('modal-subtitle'),
-    modalEditor: document.getElementById('modal-editor'),
-    modalPreview: document.getElementById('modal-preview'),
-    modalCopyBtn: document.getElementById('modal-copy-btn'),
-    modalClearBtn: document.getElementById('modal-clear-btn'),
-    insertBtn: document.getElementById('insert-btn'),
-    closeModal: document.getElementById('close-modal'),
-    modalIcon: document.getElementById('modal-icon'),
-
-    badgeConfig: document.getElementById('badge-configurator'),
-    badgeLabel: document.getElementById('badge-label'),
-    badgeMessage: document.getElementById('badge-message'),
-    badgeColor: document.getElementById('badge-color'),
-    badgeStyle: document.getElementById('badge-style'),
-
-    resizer: document.getElementById('resizer'),
-    editorContainer: document.getElementById('editor-container'),
-    previewContainer: document.getElementById('preview-container'),
-
-    toast: document.getElementById('toast'),
-    toastMessage: document.getElementById('toast-message'),
-    toastIcon: document.getElementById('toast-icon')
-};
-
+// State Management
 let currentSection = null;
+let ui = {}; // Will be populated in boot
 
 // --- App Boot ---
 
 function boot() {
+    // Populate UI references
+    ui = {
+        editor: document.getElementById('markdown-input'),
+        preview: document.getElementById('markdown-preview'),
+        sectionsList: document.getElementById('sections-list'),
+        charCount: document.getElementById('char-count'),
+        copyBtn: document.getElementById('copy-btn'),
+        downloadBtn: document.getElementById('download-btn'),
+        clearBtn: document.getElementById('clear-btn'),
+
+        modal: document.getElementById('section-modal'),
+        modalTitle: document.getElementById('modal-title'),
+        modalSubtitle: document.getElementById('modal-subtitle'),
+        modalEditor: document.getElementById('modal-editor'),
+        modalPreview: document.getElementById('modal-preview'),
+        modalCopyBtn: document.getElementById('modal-copy-btn'),
+        modalClearBtn: document.getElementById('modal-clear-btn'),
+        insertBtn: document.getElementById('insert-btn'),
+        closeModal: document.getElementById('close-modal'),
+        modalIcon: document.getElementById('modal-icon'),
+
+        badgeConfig: document.getElementById('badge-configurator'),
+        badgeLabel: document.getElementById('badge-label'),
+        badgeMessage: document.getElementById('badge-message'),
+        badgeColor: document.getElementById('badge-color'),
+        badgeStyle: document.getElementById('badge-style'),
+
+        resizer: document.getElementById('resizer'),
+        editorContainer: document.getElementById('editor-container'),
+        previewContainer: document.getElementById('preview-container'),
+
+        toast: document.getElementById('toast'),
+        toastMessage: document.getElementById('toast-message'),
+        toastIcon: document.getElementById('toast-icon')
+    };
+
     renderSidebar();
     loadWorkspace();
     setupCoreListeners();
@@ -108,7 +110,7 @@ function renderSidebar() {
                 <i data-lucide="${cat.icon}" class="w-3.5 h-3.5 text-github-accent/80"></i>
                 <span class="text-[11px] font-bold text-github-muted tracking-widest uppercase">${cat.name}</span>
             </div>
-            <div class="space-y-1 ml-0.5"></div>
+            <div class="space-y-1 ml-0.5" id="cat-${cat.name.replace(/\s+/g, '-').toLowerCase()}"></div>
         `;
         const list = catGroup.querySelector('.space-y-1');
 
@@ -139,12 +141,16 @@ function setupResizer() {
     document.addEventListener('mousemove', (e) => {
         if (!isResizing) return;
 
-        const totalWidth = window.innerWidth - ui.sectionsList.parentElement.offsetWidth;
-        const offsetLeft = e.clientX - ui.sectionsList.parentElement.offsetWidth;
-        let percentage = (offsetLeft / totalWidth) * 100;
+        // Calculate percentages based on available width
+        // Sidebar is 288px (w-72)
+        const sidebarWidth = 288;
+        const availableWidth = window.innerWidth - sidebarWidth;
+        const relativeX = e.clientX - sidebarWidth;
+
+        let percentage = (relativeX / availableWidth) * 100;
 
         // Boundaries
-        percentage = Math.max(10, Math.min(90, percentage));
+        percentage = Math.max(5, Math.min(95, percentage));
 
         ui.editorContainer.style.flex = `0 1 ${percentage}%`;
         ui.previewContainer.style.flex = `0 1 ${100 - percentage}%`;
@@ -179,8 +185,8 @@ function openModal(item, cat) {
 
     ui.modalTitle.textContent = item.name;
     ui.modalIcon.setAttribute('data-lucide', cat.icon);
-    ui.modalIcon.className = \`w-6 h-6 \${cat.isBadgeStudio ? 'text-github-success' : 'text-github-accent'}\`;
-    
+    ui.modalIcon.className = `w-6 h-6 ${cat.isBadgeStudio ? 'text-github-success' : 'text-github-accent'}`;
+
     if (cat.isBadgeStudio) {
         ui.badgeConfig.classList.remove('hidden');
         ui.modalSubtitle.textContent = 'Generator Mode: Create custom Shields.io badges';
@@ -190,11 +196,17 @@ function openModal(item, cat) {
         ui.modalSubtitle.textContent = 'Customization Mode: Adapt this block to your needs';
         ui.modalEditor.value = item.template;
     }
-    
+
     syncModalPreview();
     ui.modal.classList.remove('hidden');
     ui.modal.classList.add('flex');
     if (typeof lucide !== 'undefined') lucide.createIcons();
+}
+
+function closeModal() {
+    ui.modal.classList.add('hidden');
+    ui.modal.classList.remove('flex');
+    currentSection = null;
 }
 
 function syncBadge() {
@@ -202,8 +214,8 @@ function syncBadge() {
     const msg = encodeURIComponent(ui.badgeMessage.value || 'Value');
     const color = ui.badgeColor.value.replace('#', '');
     const style = ui.badgeStyle.value;
-    
-    const template = \`![Custom Badge](https://img.shields.io/badge/\${label}-\${msg}-\${color}?style=\${style})\`;
+
+    const template = `![Custom Badge](https://img.shields.io/badge/${label}-${msg}-${color}?style=${style})`;
     ui.modalEditor.value = template;
     syncModalPreview();
 }
@@ -221,14 +233,14 @@ function insertToWorkspace() {
     const start = ui.editor.selectionStart || 0;
     const end = ui.editor.selectionEnd || 0;
     const current = ui.editor.value;
-    
+
     const gap = current.length > 0 && current[Math.max(0, start - 1)] !== '\n' ? '\n\n' : '';
     ui.editor.value = current.substring(0, start) + gap + val + '\n' + current.substring(end);
-    
+
     closeModal();
     notifyChange();
     showToast('Block inserted successfully', 'check-circle');
-    
+
     const next = start + gap.length + val.length + 1;
     ui.editor.setSelectionRange(next, next);
     ui.editor.focus();
@@ -240,15 +252,17 @@ function showToast(msg, icon = 'check') {
     ui.toastMessage.textContent = msg;
     ui.toastIcon.setAttribute('data-lucide', icon);
     if (typeof lucide !== 'undefined') lucide.createIcons();
-    
+
     ui.toast.classList.remove('translate-y-32', 'opacity-0');
     ui.toast.classList.add('translate-y-0', 'opacity-100');
-    
+
     setTimeout(() => {
         ui.toast.classList.remove('translate-y-0', 'opacity-100');
         ui.toast.classList.add('translate-y-32', 'opacity-0');
     }, 3000);
 }
+
+// --- Persistence ---
 
 function loadWorkspace() {
     const saved = localStorage.getItem('readme_pro_draft');
@@ -264,14 +278,14 @@ function loadWorkspace() {
 
 function setupCoreListeners() {
     ui.editor.addEventListener('input', notifyChange);
-    
+
     ui.copyBtn.addEventListener('click', async () => {
         try {
             await navigator.clipboard.writeText(ui.editor.value);
             showToast('README copied to clipboard');
         } catch (e) { showToast('Copy failed', 'x-circle'); }
     });
-    
+
     ui.downloadBtn.addEventListener('click', () => {
         const blob = new Blob([ui.editor.value], { type: 'text/markdown' });
         const url = URL.createObjectURL(blob);
@@ -281,7 +295,7 @@ function setupCoreListeners() {
         a.click();
         showToast('README.md saved');
     });
-    
+
     ui.clearBtn.addEventListener('click', () => {
         if (confirm('Clear workspace? All unsaved work will be lost.')) {
             ui.editor.value = '';
@@ -302,17 +316,17 @@ function setupCoreListeners() {
         syncModalPreview();
     });
     ui.modalEditor.addEventListener('input', syncModalPreview);
-    
+
     // Badge Config
     [ui.badgeLabel, ui.badgeMessage, ui.badgeColor, ui.badgeStyle].forEach(el => {
         el.addEventListener('input', syncBadge);
     });
 
-    function closeModal() {
-        ui.modal.classList.add('hidden');
-        ui.modal.classList.remove('flex');
-    }
-    
+    // Outer click to close
+    ui.modal.addEventListener('click', (e) => {
+        if (e.target === ui.modal) closeModal();
+    });
+
     window.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') closeModal();
     });
