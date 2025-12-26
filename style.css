@@ -1,50 +1,100 @@
-/* GitHub Dark Master Theme */
+/* GitHub README Creator - Styles
+ * Authentic GitHub dark theme styling
+ */
+
 :root {
-    --github-dark: #0d1117;
-    --github-header: #161b22;
+    --github-canvas: #0d1117;
+    --github-header: #010409;
     --github-border: #30363d;
-    --github-text: #c9d1d9;
-    --github-muted: #8b949e;
+    --github-text: #e6edf3;
+    --github-muted: #7d8590;
     --github-accent: #2f81f7;
     --github-btn: #21262d;
+    --github-success: #238636;
+    --github-danger: #da3633;
+}
+
+/* Base */
+* {
+    box-sizing: border-box;
 }
 
 body {
-    background-color: var(--github-dark);
+    background-color: var(--github-canvas);
     color: var(--github-text);
 }
 
-/* GitHub Accurate Markdown Rendering */
+/* Sidebar Sections */
+.section-group {
+    margin-bottom: 1rem;
+}
+
+.section-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.25rem 0.5rem;
+    margin-bottom: 0.25rem;
+}
+
+.section-icon {
+    width: 14px;
+    height: 14px;
+    color: var(--github-muted);
+}
+
+.section-title {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--github-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.section-items {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.section-btn {
+    width: 100%;
+    text-align: left;
+    padding: 0.375rem 0.75rem;
+    border-radius: 6px;
+    font-size: 13px;
+    color: var(--github-text);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.15s, color 0.15s;
+}
+
+.section-btn:hover {
+    background-color: var(--github-btn);
+    color: var(--github-accent);
+}
+
+/* GitHub Markdown Body */
 .markdown-body {
-    word-wrap: break-word;
     font-size: 16px;
     line-height: 1.5;
-    color: #e6edf3;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
-}
-
-.markdown-body img {
-    max-width: 100%;
-    box-sizing: content-box;
-    display: inline-block;
-    vertical-align: middle;
-    margin-bottom: 4px;
-}
-
-.markdown-body a img {
-    border: none;
-    margin-right: 4px;
+    word-wrap: break-word;
+    color: var(--github-text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif;
 }
 
 /* Headings */
 .markdown-body h1,
 .markdown-body h2,
 .markdown-body h3,
-.markdown-body h4 {
-    font-weight: 600;
-    line-height: 1.25;
+.markdown-body h4,
+.markdown-body h5,
+.markdown-body h6 {
     margin-top: 24px;
     margin-bottom: 16px;
+    font-weight: 600;
+    line-height: 1.25;
 }
 
 .markdown-body h1 {
@@ -63,10 +113,17 @@ body {
     font-size: 1.25em;
 }
 
+.markdown-body h4 {
+    font-size: 1em;
+}
+
+/* Paragraphs */
 .markdown-body p {
+    margin-top: 0;
     margin-bottom: 16px;
 }
 
+/* Links */
 .markdown-body a {
     color: var(--github-accent);
     text-decoration: none;
@@ -76,14 +133,46 @@ body {
     text-decoration: underline;
 }
 
-/* Code & Syntax */
+/* Lists */
+.markdown-body ul,
+.markdown-body ol {
+    padding-left: 2em;
+    margin-top: 0;
+    margin-bottom: 16px;
+}
+
+.markdown-body li {
+    margin-top: 0.25em;
+}
+
+.markdown-body li+li {
+    margin-top: 0.25em;
+}
+
+/* Blockquotes */
+.markdown-body blockquote {
+    padding: 0 1em;
+    color: var(--github-muted);
+    border-left: 0.25em solid var(--github-border);
+    margin: 0 0 16px 0;
+}
+
+.markdown-body blockquote> :first-child {
+    margin-top: 0;
+}
+
+.markdown-body blockquote> :last-child {
+    margin-bottom: 0;
+}
+
+/* Code */
 .markdown-body code {
     padding: 0.2em 0.4em;
     margin: 0;
     font-size: 85%;
     background-color: rgba(110, 118, 129, 0.4);
     border-radius: 6px;
-    font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+    font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
 }
 
 .markdown-body pre {
@@ -98,18 +187,79 @@ body {
 }
 
 .markdown-body pre code {
-    background-color: transparent;
+    display: inline;
+    max-width: auto;
     padding: 0;
-    font-size: inherit;
-    color: inherit;
+    margin: 0;
+    overflow: visible;
+    line-height: inherit;
+    word-wrap: normal;
+    background-color: transparent;
+    border: 0;
 }
 
-/* Specific Badge Spacing (Markdown common rendering) */
-.markdown-body p>a {
+/* Tables */
+.markdown-body table {
+    border-spacing: 0;
+    border-collapse: collapse;
+    margin-top: 0;
+    margin-bottom: 16px;
+    width: max-content;
+    max-width: 100%;
+    overflow: auto;
+}
+
+.markdown-body table th,
+.markdown-body table td {
+    padding: 6px 13px;
+    border: 1px solid var(--github-border);
+}
+
+.markdown-body table th {
+    font-weight: 600;
+    background-color: var(--github-btn);
+}
+
+.markdown-body table tr {
+    background-color: var(--github-canvas);
+    border-top: 1px solid var(--github-border);
+}
+
+.markdown-body table tr:nth-child(2n) {
+    background-color: rgba(110, 118, 129, 0.1);
+}
+
+/* Images & Badges */
+.markdown-body img {
+    max-width: 100%;
+    box-sizing: content-box;
     display: inline-block;
+    vertical-align: middle;
 }
 
-/* Scrollbars */
+.markdown-body p>a>img {
+    margin-right: 4px;
+}
+
+/* Horizontal Rule */
+.markdown-body hr {
+    height: 0.25em;
+    padding: 0;
+    margin: 24px 0;
+    background-color: var(--github-border);
+    border: 0;
+}
+
+/* Strong & Emphasis */
+.markdown-body strong {
+    font-weight: 600;
+}
+
+.markdown-body em {
+    font-style: italic;
+}
+
+/* Custom Scrollbars */
 .custom-scrollbar::-webkit-scrollbar {
     width: 8px;
     height: 8px;
@@ -121,50 +271,78 @@ body {
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
     background-color: var(--github-border);
-    border-radius: 20px;
-    border: 2px solid var(--github-dark);
+    border-radius: 4px;
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
     background-color: var(--github-muted);
 }
 
-/* Sidebar Buttons */
-#sections-list button {
-    transition: transform 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
-#sections-list button:hover {
-    transform: translateX(2px);
-}
-
-/* Resizer Handle Visuals */
+/* Resizer */
 #drag-handle {
-    transition: background-color 0.2s;
+    transition: background-color 0.15s;
 }
 
-#drag-handle:hover::after {
-    content: '';
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    width: 2px;
-    height: 30px;
-    background-color: var(--github-muted);
-    border-radius: 1px;
+#drag-handle:hover {
+    background-color: var(--github-accent);
 }
 
-/* Utilities */
+/* Resizing State */
 .resizing {
     cursor: col-resize !important;
+    user-select: none !important;
 }
 
 .resizing * {
     pointer-events: none !important;
-    user-select: none !important;
+    cursor: col-resize !important;
 }
 
+/* Focus Styles */
+input:focus,
+textarea:focus,
+select:focus {
+    outline: none;
+    border-color: var(--github-accent) !important;
+}
+
+/* Button Active State */
+button:active {
+    transform: scale(0.98);
+}
+
+/* Modal Animation */
+#modal-overlay {
+    transition: opacity 0.2s ease;
+}
+
+#modal-window {
+    transition: transform 0.2s ease;
+}
+
+/* Hide scrollbar on variable bar */
 .no-scrollbar::-webkit-scrollbar {
     display: none;
+}
+
+.no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+/* Toast Animation */
+#toast-ui {
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+/* Placeholder Styling */
+textarea::placeholder,
+input::placeholder {
+    color: var(--github-muted);
+    opacity: 0.6;
+}
+
+/* Selection */
+::selection {
+    background-color: rgba(47, 129, 247, 0.4);
 }
