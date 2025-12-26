@@ -11,12 +11,28 @@
     box-sizing: content-box;
     display: inline-block;
     vertical-align: middle;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+/* Ensure badges look like badges - no underlines, proper spacing */
+.markdown-body a img {
+    border: none;
+    margin-right: 4px;
+}
+
+.markdown-body a:hover {
+    text-decoration: none;
+}
+
+.markdown-body a:hover img {
+    opacity: 0.8;
 }
 
 /* Specific Badge Spacing */
 .markdown-body p img {
-    margin-right: 4px;
-    margin-bottom: 4px;
+    margin-right: 6px;
+    margin-bottom: 8px;
 }
 
 .markdown-body>*:first-child {
@@ -189,12 +205,28 @@
 
 @keyframes modal-slide-up {
     from {
-        transform: translateY(20px);
+        transform: translateY(20px) scale(0.95);
         opacity: 0;
     }
 
     to {
-        transform: translateY(0);
+        transform: translateY(0) scale(1);
         opacity: 1;
     }
+}
+
+/* Editor Polish */
+#markdown-input:focus {
+    box-shadow: inset 0 0 0 1px #30363d;
+}
+
+/* Sidebar Hover */
+#sections-list button:hover {
+    background-color: #21262d;
+    transform: translateX(4px);
+}
+
+/* Section Header tracking */
+.tracking-widest {
+    letter-spacing: 0.1em;
 }
