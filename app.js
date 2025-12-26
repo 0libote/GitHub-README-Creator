@@ -1,56 +1,56 @@
 /**
- * GitHub README Creator - Core Logic
+ * GitHub README Pro - Advanced Creator Logic
  */
 
-// Configuration: Templates
+// Configuration: Massive & Refined Templates
 const categories = [
     {
-        name: 'Essential',
-        icon: 'star',
+        name: 'Introduction',
+        icon: 'user-circle',
         items: [
-            { id: 'title', name: 'Project Title', template: '# Project Title\n\n> A concise one-line description of your project.\n' },
-            { id: 'desc', name: 'Detailed Description', template: '## 📝 Description\n\nProvide a detailed overview of your project. What problem does it solve? Who is it for? Key features include:\n\n- Feature 1: Modern UI\n- Feature 2: High Performance\n- Feature 3: Ease of Use\n' },
-            { id: 'install', name: 'Installation', template: '## 🛠 Installation\n\nInstall my-project following these steps:\n\n```bash\n# Clone the repository\ngit clone https://github.com/username/repo.git\n\n# Navigate to project\ncd my-project\n\n# Install dependencies\nnpm install\n```\n' }
+            { id: 'banner', name: 'Project Banner', template: '<p align="center">\n  <img src="https://via.placeholder.com/800x200?text=YOUR+PROJECT+BANNER" alt="Banner" width="100%">\n</p>\n\n# 👋 Hello, fellow developers!\n' },
+            { id: 'title', name: 'Header & Quote', template: '# [PROJECT_NAME]\n\n> "[Insert a punchy, one-sentence description that explains the core value proposition]" 🚀\n' },
+            { id: 'about', name: 'Detailed About', template: '## 📝 About the Project\n\n[PROJECT_NAME] was built to solve [SPECIFIC_PROBLEM]. It focuses on [KEY_ASPECT_1], [KEY_ASPECT_2], and [KEY_ASPECT_3].\n\nHere\'s why you should use it:\n- ⚡ **Performance**: Lightning fast execution.\n- 🎨 **UX**: Clean and intuitive interface.\n- 🛠 **Flexibility**: Works everywhere.\n' }
         ]
     },
     {
-        name: 'Engagement',
-        icon: 'activity',
+        name: 'Quick Stats & Links',
+        icon: 'bar-chart-2',
         items: [
-            { id: 'badges', name: 'Social Badges', template: '## 🔗 Connect with me\n\n[![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://linkedin.com/in/username)\n[![Twitter](https://img.shields.io/badge/Twitter-1DA1F2?style=for-the-badge&logo=twitter&logoColor=white)](https://twitter.com/username)\n[![Portfolio](https://img.shields.io/badge/Portfolio-25292E?style=for-the-badge&logo=google-chrome&logoColor=white)](https://example.com)\n' },
-            { id: 'status', name: 'Project Status', template: '![Build Status](https://img.shields.io/github/actions/workflow/status/username/repo/deploy.yml?branch=main&style=for-the-badge)\n![Version](https://img.shields.io/github/v/release/username/repo?style=for-the-badge&color=blue)\n![License](https://img.shields.io/github/license/username/repo?style=for-the-badge&color=green)\n' },
-            { id: 'stats', name: 'GitHub Stats', template: '## 📊 GitHub Stats\n\n![My Stats](https://github-readme-stats.vercel.app/api?username=yourusername&show_icons=true&theme=tokyonight)\n![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=yourusername&layout=compact&theme=tokyonight)\n' }
+            { id: 'badges', name: 'Activity Badges', template: '![GitHub release (latest by date)](https://img.shields.io/github/v/release/[USER]/[REPO]?style=for-the-badge&color=2f81f7)\n![GitHub last commit](https://img.shields.io/github/last-commit/[USER]/[REPO]?style=for-the-badge&color=238636)\n![GitHub stars](https://img.shields.io/github/stars/[USER]/[REPO]?style=for-the-badge&color=e3b341)\n![GitHub issues](https://img.shields.io/github/issues/[USER]/[REPO]?style=for-the-badge&color=d73a49)\n' },
+            { id: 'social', name: 'Premium Socials', template: '## 🔗 Connect with the Creator\n\n<p align="left">\n<a href="https://twitter.com/[USER]"><img src="https://img.shields.io/badge/Twitter-1DA1F2?style=for-the-badge&logo=twitter&logoColor=white" /></a>\n<a href="https://linkedin.com/in/[USER]"><img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" /></a>\n<a href="https://discord.gg/[INVITE]"><img src="https://img.shields.io/badge/Discord-5865F2?style=for-the-badge&logo=discord&logoColor=white" /></a>\n</p>\n' },
+            { id: 'deploy', name: 'Live Deployments', template: '## 🌐 Live Demo\n\nCheck out the live application here: [**Live Link**](https://[APP_NAME].vercel.app) 🚀\n' }
         ]
     },
     {
-        name: 'Technical',
-        icon: 'code',
+        name: 'Technical Depth',
+        icon: 'terminal',
         items: [
-            { id: 'tech', name: 'Tech Stack', template: '### 💻 Tech Stack\n\n**Frontend:** React, Tailwind CSS, Lucide Icons\n**Backend:** Node.js, Express, MongoDB\n**Tools:** Vite, GitHub Actions\n\n![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)\n![NodeJS](https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white)\n![Tailwind](https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white)\n' },
-            { id: 'usage', name: 'Usage Examples', template: '## 🚀 Usage\n\n```javascript\nimport { feature } from \'my-project\';\n\n// Basic usage\nfeature.init();\n\n// Advanced usage\nfeature.configure({ theme: \'dark\' });\n```\n' },
-            { id: 'api', name: 'API Reference', template: '## 📖 API Reference\n\n| Method | Endpoint | Description |\n| :--- | :--- | :--- |\n| `GET` | `/api/users` | List all users |\n| `POST` | `/api/login` | Authenticate user |\n' }
+            { id: 'tech', name: 'Tech Stack Grid', template: '### 💻 Built With\n\n| Frontend | Backend | DevTools |\n| :--- | :--- | :--- |\n| ![React](https://img.shields.io/badge/React-20232A?style=flat-square&logo=react&logoColor=61DAFB) | ![Node](https://img.shields.io/badge/Node.js-339933?style=flat-square&logo=nodedotjs&logoColor=white) | ![Vite](https://img.shields.io/badge/Vite-646CFF?style=flat-square&logo=vite&logoColor=white) |\n| ![Tailwind](https://img.shields.io/badge/Tailwind-38B2AC?style=flat-square&logo=tailwind-css&logoColor=white) | ![Express](https://img.shields.io/badge/Express-000000?style=flat-square&logo=express&logoColor=white) | ![GitHub](https://img.shields.io/badge/GitHub-181717?style=flat-square&logo=github&logoColor=white) |\n' },
+            { id: 'api', name: 'Endpoint Docs', template: '## 📖 API Documentation\n\n| Method | Endpoint | Data | Description |\n| :--- | :--- | :--- | :--- |\n| `GET` | `/v1/auth/user` | `none` | Returns user data |\n| `POST` | `/v1/auth/login` | `{email, pass}` | Sets auth cookie |\n' },
+            { id: 'install', name: 'Pro Installation', template: '## 🛠 Installation & Setup\n\n1. Clone the repository\n   ```bash\n   git clone https://github.com/[USER]/[REPO].git\n   ```\n2. Install dependencies\n   ```bash\n   npm install\n   ```\n3. Start the dev server\n   ```bash\n   npm run dev\n   ```\n' }
         ]
     },
     {
-        name: 'Community',
-        icon: 'users',
+        name: 'Badge Studio',
+        icon: 'shield',
+        isBadgeStudio: true,
         items: [
-            { id: 'contribute', name: 'Contributing', template: '## 🤝 Contributing\n\n1. Fork the Project\n2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)\n3. Commit your Changes (`git commit -m \'Add AmazingFeature\'`)\n4. Push to the Branch (`git push origin feature/AmazingFeature`)\n5. Open a Pull Request\n' },
-            { id: 'license', name: 'License', template: '## 📜 License\n\nDistributed under the MIT License. See `LICENSE` for more information.\n' },
-            { id: 'thanks', name: 'Acknowledge', template: '## 💖 Acknowledgements\n\n- [Awesome Library](https://github.com/lib)\n- [Inspiration](https://github.com/inspire)\n' }
+            { id: 'custom-badge', name: 'Generate Any Badge', template: '![Custom Badge](https://img.shields.io/badge/[LABEL]-[MESSAGE]-[COLOR]?style=[STYLE])' }
+        ]
+    },
+    {
+        name: 'Guidelines',
+        icon: 'book-open',
+        items: [
+            { id: 'contributing', name: 'Code of Conduct', template: '## 🤝 Contributing\n\n1. Fork the repo\n2. Create feature branch\n3. Push changes\n4. Open a PR!\n\nCheck out the full [contribution guide](CONTRIBUTING.md) for details.\n' },
+            { id: 'license', name: 'License Info', template: '## 📜 License\n\nDistributed under the **MIT License**. See `LICENSE` for details.\n' }
         ]
     }
 ];
 
-// State Management
-const state = {
-    content: '',
-    modalSection: null,
-    isDark: true
-};
-
-// DOM Refs
-const elements = {
+// UI Reference
+const ui = {
     editor: document.getElementById('markdown-input'),
     preview: document.getElementById('markdown-preview'),
     sectionsList: document.getElementById('sections-list'),
@@ -58,219 +58,265 @@ const elements = {
     copyBtn: document.getElementById('copy-btn'),
     downloadBtn: document.getElementById('download-btn'),
     clearBtn: document.getElementById('clear-btn'),
-    themeToggle: document.getElementById('theme-toggle'),
-    themeIconSun: document.getElementById('theme-icon-sun'),
-    themeIconMoon: document.getElementById('theme-icon-moon'),
 
     modal: document.getElementById('section-modal'),
     modalTitle: document.getElementById('modal-title'),
+    modalSubtitle: document.getElementById('modal-subtitle'),
     modalEditor: document.getElementById('modal-editor'),
     modalPreview: document.getElementById('modal-preview'),
     modalCopyBtn: document.getElementById('modal-copy-btn'),
     modalClearBtn: document.getElementById('modal-clear-btn'),
     insertBtn: document.getElementById('insert-btn'),
     closeModal: document.getElementById('close-modal'),
+    modalIcon: document.getElementById('modal-icon'),
+
+    badgeConfig: document.getElementById('badge-configurator'),
+    badgeLabel: document.getElementById('badge-label'),
+    badgeMessage: document.getElementById('badge-message'),
+    badgeColor: document.getElementById('badge-color'),
+    badgeStyle: document.getElementById('badge-style'),
+
+    resizer: document.getElementById('resizer'),
+    editorContainer: document.getElementById('editor-container'),
+    previewContainer: document.getElementById('preview-container'),
 
     toast: document.getElementById('toast'),
-    toastMessage: document.getElementById('toast-message')
+    toastMessage: document.getElementById('toast-message'),
+    toastIcon: document.getElementById('toast-icon')
 };
 
-// --- Initialization ---
+let currentSection = null;
 
-function init() {
+// --- App Boot ---
+
+function boot() {
     renderSidebar();
-    loadStorage();
-    setupListeners();
-    updateThemeUI();
+    loadWorkspace();
+    setupCoreListeners();
+    setupResizer();
     if (typeof lucide !== 'undefined') lucide.createIcons();
 }
 
-// --- Sidebar & Templates ---
+// --- Sidebar Logic ---
 
 function renderSidebar() {
-    elements.sectionsList.innerHTML = '';
-
+    ui.sectionsList.innerHTML = '';
     categories.forEach(cat => {
-        const catDiv = document.createElement('div');
-        catDiv.innerHTML = `
-            <div class="flex items-center gap-2 mb-2">
-                <i data-lucide="${cat.icon}" class="w-3 h-3 text-github-accent"></i>
-                <span class="text-[10px] uppercase tracking-wider font-bold text-github-muted">${cat.name}</span>
+        const catGroup = document.createElement('div');
+        catGroup.innerHTML = `
+            <div class="flex items-center gap-2 mb-3 px-1">
+                <i data-lucide="${cat.icon}" class="w-3.5 h-3.5 text-github-accent/80"></i>
+                <span class="text-[11px] font-bold text-github-muted tracking-widest uppercase">${cat.name}</span>
             </div>
-            <div class="space-y-1 mb-4"></div>
+            <div class="space-y-1 ml-0.5"></div>
         `;
-        const itemContainer = catDiv.querySelector('.space-y-1');
+        const list = catGroup.querySelector('.space-y-1');
 
         cat.items.forEach(item => {
-            const btn = document.createElement('button');
-            btn.className = 'w-full text-left px-3 py-1.5 rounded-md text-sm text-github-muted hover:bg-github-btn hover:text-github-text transition-all flex items-center justify-between group border border-transparent hover:border-github-border';
-            btn.innerHTML = `
-                <span class="truncate">${item.name}</span>
-                <i data-lucide="plus" class="w-3.5 h-3.5 opacity-0 group-hover:opacity-100 transition-opacity"></i>
+            const row = document.createElement('button');
+            row.className = 'w-full text-left px-3 py-2 rounded-lg text-sm text-github-muted hover:bg-github-btn hover:text-github-text transition-all group flex items-center justify-between border border-transparent hover:border-github-border/50 active:scale-[0.98]';
+            row.innerHTML = `
+                <span class="truncate font-medium">${item.name}</span>
+                <i data-lucide="chevron-right" class="w-3.5 h-3.5 opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 transition-all"></i>
             `;
-            btn.onclick = () => openModal(item);
-            itemContainer.appendChild(btn);
+            row.onclick = () => openModal(item, cat);
+            list.appendChild(row);
         });
-
-        elements.sectionsList.appendChild(catDiv);
+        ui.sectionsList.appendChild(catGroup);
     });
 }
 
-// --- Preview & Logic ---
+// --- Resizer Logic ---
 
-function renderMarkdown(content, targetEl) {
-    if (!targetEl) return;
+function setupResizer() {
+    let isResizing = false;
+
+    ui.resizer.addEventListener('mousedown', (e) => {
+        isResizing = true;
+        document.body.classList.add('resizing');
+    });
+
+    document.addEventListener('mousemove', (e) => {
+        if (!isResizing) return;
+
+        const totalWidth = window.innerWidth - ui.sectionsList.parentElement.offsetWidth;
+        const offsetLeft = e.clientX - ui.sectionsList.parentElement.offsetWidth;
+        let percentage = (offsetLeft / totalWidth) * 100;
+
+        // Boundaries
+        percentage = Math.max(10, Math.min(90, percentage));
+
+        ui.editorContainer.style.flex = `0 1 ${percentage}%`;
+        ui.previewContainer.style.flex = `0 1 ${100 - percentage}%`;
+    });
+
+    document.addEventListener('mouseup', () => {
+        isResizing = false;
+        document.body.classList.remove('resizing');
+    });
+}
+
+// --- Preview & State ---
+
+function notifyChange() {
+    const val = ui.editor.value;
     try {
-        const html = DOMPurify.sanitize(marked.parse(content));
-        targetEl.innerHTML = html;
-
-        // Code highlighting
+        const html = DOMPurify.sanitize(marked.parse(val));
+        ui.preview.innerHTML = html;
         if (typeof hljs !== 'undefined') {
-            targetEl.querySelectorAll('pre code').forEach(block => hljs.highlightElement(block));
+            ui.preview.querySelectorAll('pre code').forEach(el => hljs.highlightElement(el));
         }
-    } catch (e) {
-        console.error('Markdown error:', e);
+    } catch (e) { console.warn(e); }
+
+    ui.charCount.textContent = `${val.length} CHARS`;
+    localStorage.setItem('readme_pro_draft', val);
+}
+
+// --- Modal & Badge Studio ---
+
+function openModal(item, cat) {
+    currentSection = { ...item, type: cat.isBadgeStudio ? 'badge' : 'item' };
+
+    ui.modalTitle.textContent = item.name;
+    ui.modalIcon.setAttribute('data-lucide', cat.icon);
+    ui.modalIcon.className = \`w-6 h-6 \${cat.isBadgeStudio ? 'text-github-success' : 'text-github-accent'}\`;
+    
+    if (cat.isBadgeStudio) {
+        ui.badgeConfig.classList.remove('hidden');
+        ui.modalSubtitle.textContent = 'Generator Mode: Create custom Shields.io badges';
+        syncBadge();
+    } else {
+        ui.badgeConfig.classList.add('hidden');
+        ui.modalSubtitle.textContent = 'Customization Mode: Adapt this block to your needs';
+        ui.modalEditor.value = item.template;
     }
-}
-
-function handleEditorChange() {
-    state.content = elements.editor.value;
-    renderMarkdown(state.content, elements.preview);
-    elements.charCount.textContent = `${state.content.length} characters`;
-    localStorage.setItem('readme-creator-data', state.content);
-}
-
-// --- Modal Control ---
-
-function openModal(item) {
-    state.modalSection = item;
-    elements.modalTitle.textContent = item.name;
-    elements.modalEditor.value = item.template;
-    renderMarkdown(item.template, elements.modalPreview);
-
-    elements.modal.classList.remove('hidden');
-    elements.modal.classList.add('flex');
-    elements.modalEditor.focus();
+    
+    syncModalPreview();
+    ui.modal.classList.remove('hidden');
+    ui.modal.classList.add('flex');
     if (typeof lucide !== 'undefined') lucide.createIcons();
 }
 
-function closeModal() {
-    elements.modal.classList.add('hidden');
-    elements.modal.classList.remove('flex');
-    state.modalSection = null;
+function syncBadge() {
+    const label = encodeURIComponent(ui.badgeLabel.value || 'Label');
+    const msg = encodeURIComponent(ui.badgeMessage.value || 'Value');
+    const color = ui.badgeColor.value.replace('#', '');
+    const style = ui.badgeStyle.value;
+    
+    const template = \`![Custom Badge](https://img.shields.io/badge/\${label}-\${msg}-\${color}?style=\${style})\`;
+    ui.modalEditor.value = template;
+    syncModalPreview();
 }
 
-function handleModalInsert() {
-    const template = elements.modalEditor.value;
-    const start = elements.editor.selectionStart || 0;
-    const end = elements.editor.selectionEnd || 0;
-    const current = elements.editor.value;
-
-    const prefix = current.length > 0 && current[Math.max(0, start - 1)] !== '\n' ? '\n\n' : '';
-    const output = current.substring(0, start) + prefix + template + '\n' + current.substring(end);
-
-    elements.editor.value = output;
-    closeModal();
-    handleEditorChange();
-    showToast('Section inserted! ✨');
-
-    const newPos = start + prefix.length + template.length + 1;
-    elements.editor.setSelectionRange(newPos, newPos);
-    elements.editor.focus();
-}
-
-// --- Utilities ---
-
-function showToast(message) {
-    elements.toastMessage.textContent = message;
-    elements.toast.classList.remove('translate-y-20', 'opacity-0');
-    elements.toast.classList.add('-translate-y-0', 'opacity-100');
-
-    setTimeout(() => {
-        elements.toast.classList.add('translate-y-20', 'opacity-0');
-        elements.toast.classList.remove('-translate-y-0', 'opacity-100');
-    }, 2500);
-}
-
-async function copyToClipboard(text) {
+function syncModalPreview() {
+    const raw = ui.modalEditor.value;
     try {
-        await navigator.clipboard.writeText(text);
-        showToast('Copied to clipboard! 📋');
-    } catch (err) {
-        console.error('Copy failed:', err);
-    }
+        const html = DOMPurify.sanitize(marked.parse(raw));
+        ui.modalPreview.innerHTML = html;
+    } catch (e) { }
 }
 
-function downloadFile() {
-    const blob = new Blob([elements.editor.value], { type: 'text/markdown' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'README.md';
-    a.click();
-    URL.revokeObjectURL(url);
-    showToast('Downloading README.md... 💾');
+function insertToWorkspace() {
+    const val = ui.modalEditor.value;
+    const start = ui.editor.selectionStart || 0;
+    const end = ui.editor.selectionEnd || 0;
+    const current = ui.editor.value;
+    
+    const gap = current.length > 0 && current[Math.max(0, start - 1)] !== '\n' ? '\n\n' : '';
+    ui.editor.value = current.substring(0, start) + gap + val + '\n' + current.substring(end);
+    
+    closeModal();
+    notifyChange();
+    showToast('Block inserted successfully', 'check-circle');
+    
+    const next = start + gap.length + val.length + 1;
+    ui.editor.setSelectionRange(next, next);
+    ui.editor.focus();
 }
 
-function updateThemeUI() {
-    const isDark = state.isDark;
-    document.documentElement.classList.toggle('dark', isDark);
-    elements.themeIconSun.classList.toggle('hidden', !isDark);
-    elements.themeIconMoon.classList.toggle('hidden', isDark);
+// --- User Feedback ---
+
+function showToast(msg, icon = 'check') {
+    ui.toastMessage.textContent = msg;
+    ui.toastIcon.setAttribute('data-lucide', icon);
+    if (typeof lucide !== 'undefined') lucide.createIcons();
+    
+    ui.toast.classList.remove('translate-y-32', 'opacity-0');
+    ui.toast.classList.add('translate-y-0', 'opacity-100');
+    
+    setTimeout(() => {
+        ui.toast.classList.remove('translate-y-0', 'opacity-100');
+        ui.toast.classList.add('translate-y-32', 'opacity-0');
+    }, 3000);
 }
 
-function loadStorage() {
-    const saved = localStorage.getItem('readme-creator-data');
-    if (saved !== null) {
-        elements.editor.value = saved;
+function loadWorkspace() {
+    const saved = localStorage.getItem('readme_pro_draft');
+    if (saved) {
+        ui.editor.value = saved;
     } else {
-        elements.editor.value = '# 👋 Welcome to your README\n\nSelect a section from the left to start building your professional project documentation.';
+        ui.editor.value = '# 🏁 Welcome to BuildSpace\n\nChoose a template from the left to start building your GitHub documentation. Automagically rendered for you.';
     }
-
-    const theme = localStorage.getItem('readme-theme');
-    if (theme === 'light') state.isDark = false;
-
-    handleEditorChange();
+    notifyChange();
 }
 
 // --- Event Listeners ---
 
-function setupListeners() {
-    elements.editor.addEventListener('input', handleEditorChange);
-    elements.modalEditor.addEventListener('input', () => renderMarkdown(elements.modalEditor.value, elements.modalPreview));
-
-    elements.copyBtn.addEventListener('click', () => copyToClipboard(elements.editor.value));
-    elements.downloadBtn.addEventListener('click', downloadFile);
-    elements.clearBtn.addEventListener('click', () => {
-        if (confirm('Clear everything?')) {
-            elements.editor.value = '';
-            handleEditorChange();
+function setupCoreListeners() {
+    ui.editor.addEventListener('input', notifyChange);
+    
+    ui.copyBtn.addEventListener('click', async () => {
+        try {
+            await navigator.clipboard.writeText(ui.editor.value);
+            showToast('README copied to clipboard');
+        } catch (e) { showToast('Copy failed', 'x-circle'); }
+    });
+    
+    ui.downloadBtn.addEventListener('click', () => {
+        const blob = new Blob([ui.editor.value], { type: 'text/markdown' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'README.md';
+        a.click();
+        showToast('README.md saved');
+    });
+    
+    ui.clearBtn.addEventListener('click', () => {
+        if (confirm('Clear workspace? All unsaved work will be lost.')) {
+            ui.editor.value = '';
+            notifyChange();
+            showToast('Workspace reset', 'trash');
         }
     });
 
-    elements.themeToggle.addEventListener('click', () => {
-        state.isDark = !state.isDark;
-        localStorage.setItem('readme-theme', state.isDark ? 'dark' : 'light');
-        updateThemeUI();
-    });
-
     // Modal
-    elements.closeModal.addEventListener('click', closeModal);
-    elements.insertBtn.addEventListener('click', handleModalInsert);
-    elements.modalCopyBtn.addEventListener('click', () => copyToClipboard(elements.modalEditor.value));
-    elements.modalClearBtn.addEventListener('click', () => {
-        elements.modalEditor.value = '';
-        renderMarkdown('', elements.modalPreview);
+    ui.closeModal.addEventListener('click', closeModal);
+    ui.insertBtn.addEventListener('click', insertToWorkspace);
+    ui.modalCopyBtn.addEventListener('click', () => {
+        navigator.clipboard.writeText(ui.modalEditor.value);
+        showToast('Section copied', 'copy');
+    });
+    ui.modalClearBtn.addEventListener('click', () => {
+        ui.modalEditor.value = '';
+        syncModalPreview();
+    });
+    ui.modalEditor.addEventListener('input', syncModalPreview);
+    
+    // Badge Config
+    [ui.badgeLabel, ui.badgeMessage, ui.badgeColor, ui.badgeStyle].forEach(el => {
+        el.addEventListener('input', syncBadge);
     });
 
-    elements.modal.addEventListener('click', (e) => {
-        if (e.target === elements.modal) closeModal();
-    });
-
+    function closeModal() {
+        ui.modal.classList.add('hidden');
+        ui.modal.classList.remove('flex');
+    }
+    
     window.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') closeModal();
     });
 }
 
-// Boot
-window.onload = init;
+// Boot the App
+window.onload = boot;

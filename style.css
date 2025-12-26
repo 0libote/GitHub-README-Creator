@@ -1,170 +1,114 @@
-/* GitHub-style Markdown Rendering Styles */
-.markdown-body {
-    word-wrap: break-word;
-    font-size: 16px;
-    line-height: 1.5;
-    color: #c9d1d9;
+/* GitHub Dark Aesthetic Mastery */
+:root {
+    --github-dark: #0d1117;
+    --github-header: #161b22;
+    --github-border: #30363d;
+    --github-text: #c9d1d9;
+    --github-muted: #8b949e;
+    --github-accent: #2f81f7;
 }
 
+body {
+    background-color: var(--github-dark);
+    color: var(--github-text);
+}
+
+.markdown-body {
+    word-wrap: break-word;
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--github-text);
+}
+
+/* Image & Badge Rendering */
 .markdown-body img {
     max-width: 100%;
     box-sizing: content-box;
     display: inline-block;
     vertical-align: middle;
-    margin: 4px 0;
+    margin: 8px 0;
+    transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-/* Specific Badge Styling */
 .markdown-body a img {
     border: none;
-    margin-right: 5px;
-    margin-bottom: 5px;
-    transition: transform 0.2s, opacity 0.2s;
+    margin-right: 8px;
+    margin-bottom: 8px;
 }
 
 .markdown-body a:hover img {
-    transform: translateY(-1px);
-    opacity: 0.9;
+    transform: translateY(-2px) scale(1.05);
 }
 
 /* Markdown Hierarchy */
 .markdown-body h1,
-.markdown-body h2,
-.markdown-body h3,
-.markdown-body h4,
-.markdown-body h5,
-.markdown-body h6 {
-    margin-top: 24px;
-    margin-bottom: 16px;
-    font-weight: 600;
-    line-height: 1.25;
+.markdown-body h2 {
+    border-bottom: 1px solid var(--github-border);
+    padding-bottom: 0.3em;
+    margin-bottom: 20px;
+    font-weight: 700;
 }
 
 .markdown-body h1 {
-    font-size: 2em;
-    padding-bottom: 0.3em;
-    border-bottom: 1px solid #30363d;
+    font-size: 1.85em;
 }
 
 .markdown-body h2 {
-    font-size: 1.5em;
-    padding-bottom: 0.3em;
-    border-bottom: 1px solid #30363d;
+    font-size: 1.45em;
+    margin-top: 32px;
 }
 
 .markdown-body h3 {
-    font-size: 1.25em;
-}
-
-.markdown-body h4 {
-    font-size: 1em;
+    font-size: 1.2em;
+    font-weight: 600;
+    margin-top: 24px;
 }
 
 .markdown-body p {
     margin-bottom: 16px;
+    color: rgba(201, 209, 217, 0.9);
 }
 
 .markdown-body a {
-    color: #58a6ff;
+    color: var(--github-accent);
     text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.2s;
 }
 
 .markdown-body a:hover {
-    text-decoration: underline;
+    border-bottom-color: var(--github-accent);
 }
 
-/* Code & Links */
+/* Code Blocks */
 .markdown-body code {
-    padding: 0.2em 0.4em;
-    margin: 0;
+    padding: 0.2em 0.5em;
     font-size: 85%;
-    background-color: rgba(110, 118, 129, 0.4);
+    background-color: rgba(110, 118, 129, 0.3);
     border-radius: 6px;
-    font-family: ui-monospace, SFMono-Regular, SF Mono, Menlo, Consolas;
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
 }
 
 .markdown-body pre {
-    padding: 16px;
-    overflow: auto;
-    font-size: 85%;
-    line-height: 1.45;
+    padding: 20px;
     background-color: #161b22;
-    border: 1px solid #30363d;
-    border-radius: 6px;
-    margin-bottom: 16px;
+    border: 1px solid var(--github-border);
+    border-radius: 12px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .markdown-body pre code {
-    background-color: transparent;
+    background: transparent;
     padding: 0;
-    border: 0;
+    font-size: 13px;
+    line-height: 1.5;
 }
 
-.markdown-body table {
-    width: 100%;
-    margin-bottom: 16px;
-    border-collapse: collapse;
-}
-
-.markdown-body th,
-.markdown-body td {
-    padding: 6px 13px;
-    border: 1px solid #30363d;
-}
-
-.markdown-body tr {
-    background-color: #0d1117;
-    border-top: 1px solid #30363d;
-}
-
-.markdown-body tr:nth-child(2n) {
-    background-color: #161b22;
-}
-
-/* Theme Light Mode Overrides */
-html:not(.dark) body {
-    background-color: #f6f8fa;
-    color: #1f2328;
-}
-
-html:not(.dark) .bg-github-header {
-    background-color: #f6f8fa;
-}
-
-html:not(.dark) .bg-github-dark {
-    background-color: #ffffff;
-}
-
-html:not(.dark) .border-github-border {
-    border-color: #d0d7de;
-}
-
-html:not(.dark) .text-github-text {
-    color: #1f2328;
-}
-
-html:not(.dark) .text-github-muted {
-    color: #656d76;
-}
-
-html:not(.dark) .markdown-body {
-    color: #1f2328;
-}
-
-html:not(.dark) .markdown-body h1,
-html:not(.dark) .markdown-body h2 {
-    border-bottom-color: #d0d7de;
-}
-
-html:not(.dark) .markdown-body pre {
-    background-color: #f6f8fa;
-    border-color: #d0d7de;
-}
-
-/* Custom Scrollbar */
+/* Custom UI Components */
 .custom-scrollbar::-webkit-scrollbar {
-    width: 10px;
-    height: 10px;
+    width: 6px;
+    height: 6px;
 }
 
 .custom-scrollbar::-webkit-scrollbar-track {
@@ -172,48 +116,60 @@ html:not(.dark) .markdown-body pre {
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
-    background-color: #30363d;
-    border-radius: 20px;
-    border: 2px solid transparent;
-    background-clip: content-box;
-}
-
-html:not(.dark) .custom-scrollbar::-webkit-scrollbar-thumb {
-    background-color: #d0d7de;
+    background-color: var(--github-border);
+    border-radius: 10px;
+    transition: background-color 0.2s;
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-    background-color: #484f58;
+    background-color: var(--github-muted);
 }
 
-/* Animations */
-@keyframes modal-in {
-    from {
-        opacity: 0;
-        transform: scale(0.95) translateY(10px);
-    }
-
-    to {
-        opacity: 1;
-        transform: scale(1) translateY(0);
-    }
+/* Pane Resizer Utility */
+.resizing {
+    pointer-events: none;
+    user-select: none;
 }
 
+/* Section Sidebar Button Refinement */
+#sections-list button {
+    position: relative;
+    overflow: hidden;
+}
+
+#sections-list button::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 2px;
+    height: 0;
+    background-color: var(--github-accent);
+    transition: height 0.2s ease;
+}
+
+#sections-list button:hover::after {
+    height: 60%;
+}
+
+/* Toast Animation Fix */
+#toast {
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+}
+
+/* Badge Generator Specifics */
+input[type="color"]::-webkit-color-swatch-wrapper {
+    padding: 0;
+}
+
+input[type="color"]::-webkit-color-swatch {
+    border: none;
+    border-radius: 4px;
+}
+
+/* Modal Micro-animations */
 .modal-content {
-    animation: modal-in 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-#section-modal:not(.hidden) {
-    display: flex;
-}
-
-/* Editor Focus */
-#markdown-input:focus,
-#modal-editor:focus {
-    background-color: rgba(22, 27, 34, 0.5);
-}
-
-html:not(.dark) #markdown-input:focus,
-html:not(.dark) #modal-editor:focus {
-    background-color: rgba(246, 248, 250, 0.5);
+    backface-visibility: hidden;
+    transform: translateZ(0);
 }
