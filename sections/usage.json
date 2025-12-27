@@ -1,0 +1,16 @@
+{
+    "name": "Installation & Usage",
+    "icon": "terminal",
+    "items": [
+        {
+            "id": "install-npm",
+            "name": "NPM Installation",
+            "template": "## Installation\n\n```bash\n# Clone the repository\ngit clone https://github.com/[USER]/[REPO].git\n\n# Navigate to directory\ncd [REPO]\n\n# Install dependencies\nnpm install\n\n# Start development server\nnpm run dev\n```\n"
+        },
+        {
+            "id": "usage",
+            "name": "Usage Example",
+            "template": "## Usage\n\n```javascript\nimport { example } from '[REPO]';\n\n// Basic usage\nconst result = example({\n  option: 'value'\n});\n\nconsole.log(result);\n```\n"
+        }
+    ]
+}

@@ -1,0 +1,11 @@
+{
+    "name": "Tech & Stack",
+    "icon": "layers",
+    "items": [
+        {
+            "id": "tech-stack",
+            "name": "Tech Stack Table",
+            "template": "## Tech Stack\n| Category | Technologies |\n|----------|-------------|\n| Frontend | React, TypeScript, Tailwind CSS |\n| Backend | Node.js, Express |\n| Database | PostgreSQL, Redis |\n| DevOps | Docker, GitHub Actions |\n"
+        }
+    ]
+}

@@ -1,0 +1,21 @@
+{
+    "name": "Header & Intro",
+    "icon": "file-text",
+    "items": [
+        {
+            "id": "banner",
+            "name": "Project Banner",
+            "template": "<p align=\"center\">\n  <img src=\"https://via.placeholder.com/800x200/0d1117/2f81f7?text=[TITLE]\" alt=\"[TITLE] Banner\" width=\"100%\">\n</p>\n\n<h1 align=\"center\">[TITLE]</h1>\n\n<p align=\"center\">\n  <em>A brief, compelling description of your project goes here.</em>\n</p>\n"
+        },
+        {
+            "id": "header-simple",
+            "name": "Simple Header",
+            "template": "# [TITLE]\n\n> A brief tagline describing what [REPO] does.\n"
+        },
+        {
+            "id": "about",
+            "name": "About Section",
+            "template": "## About\n\n**[TITLE]** is designed to solve [describe problem]. Built with a focus on simplicity and developer experience.\n\n### Key Features\n\n- Feature one description\n- Feature two description\n- Feature three description\n"
+        }
+    ]
+}

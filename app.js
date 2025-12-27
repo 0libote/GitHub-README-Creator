@@ -21,7 +21,8 @@ const App = {
  */
 function updatePreview() {
     const raw = App.ui.editor.value;
-    const html = Utils.parseMarkdown(raw);
+    const injected = Utils.injectVariables(raw, App.vars);
+    const html = Utils.parseMarkdown(injected);
     App.ui.preview.innerHTML = html;
 
     // Syntax highlighting for code blocks
@@ -78,8 +79,17 @@ function renderSidebar() {
 async function loadSections() {
     try {
         App.ui.sectionsList.innerHTML = '<div class="p-4 text-xs text-github-muted">Loading components...</div>';
-        const response = await fetch('sections.json');
-        App.sections = await response.json();
+
+        // Fetch manifest first
+        const manifestRes = await fetch('sections/manifest.json');
+        const manifest = await manifestRes.json();
+
+        // Fetch all categories in parallel
+        const categoryPromises = manifest.categories.map(file =>
+            fetch(`sections/${file}`).then(res => res.json())
+        );
+
+        App.sections = await Promise.all(categoryPromises);
         renderSidebar();
     } catch (err) {
         console.error('Failed to load sections:', err);
@@ -375,23 +385,35 @@ function init() {
     if (draft) {
         App.ui.editor.value = draft;
     } else {
-        App.ui.editor.value = `# Project Title
+        App.ui.editor.value = `# 🚀 Welcome to README Creator
 
-> A brief description of what this project does and who it's for.
+Use this tool to build professional GitHub READMEs in minutes.
 
-## Installation
+### 🛠️ How to use:
+1. **Set Variables**: Fill in your username and repository at the top.
+2. **Add Components**: Click items in the left sidebar to customize and copy snippets.
+3. **Badge Studio**: Use our enhanced studio to create fully custom badges with logos and colors.
+4. **Live Preview**: See your changes in real-time on the right.
+5. **Format Text**: Highlight any text in this editor to see the floating formatting toolbar.
 
-\`\`\`bash
-npm install my-project
-\`\`\`
+---
 
-## Usage
+## Example Section: [TITLE]
 
-Add your usage instructions here.
+> [!TIP]
+> This is a placeholder section using the [PROJECT_TITLE] variable.
 
-## License
+### Project Goals
+- Goal 1: High performance
+- Goal 2: Intuitive UX
+- Goal 3: Modular design
 
-[MIT](LICENSE)
+### Tech Stack
+![Built With](https://img.shields.io/badge/Made%20With-JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
+
+---
+
+*Ready to start? Clear this draft using the "Reset Draft" button at the bottom left.*
 `;
     }
 
@@ -400,12 +422,15 @@ Add your usage instructions here.
     // Variable inputs
     App.ui.varUser.addEventListener('input', (e) => {
         App.vars.user = e.target.value;
+        updatePreview();
     });
     App.ui.varRepo.addEventListener('input', (e) => {
         App.vars.repo = e.target.value;
+        updatePreview();
     });
     App.ui.varTitle.addEventListener('input', (e) => {
         App.vars.title = e.target.value;
+        updatePreview();
     });
 
     // Editor input with debounce

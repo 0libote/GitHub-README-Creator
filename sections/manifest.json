@@ -1,0 +1,12 @@
+{
+    "categories": [
+        "header.json",
+        "badges.json",
+        "usage.json",
+        "tech.json",
+        "elements.json",
+        "documentation.json",
+        "community.json",
+        "legal.json"
+    ]
+}
