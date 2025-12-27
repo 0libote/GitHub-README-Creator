@@ -1,0 +1,153 @@
+[
+    {
+        "name": "Header & Intro",
+        "icon": "file-text",
+        "items": [
+            {
+                "id": "banner",
+                "name": "Project Banner",
+                "template": "<p align=\"center\">\n  <img src=\"https://via.placeholder.com/800x200/0d1117/2f81f7?text=[TITLE]\" alt=\"[TITLE] Banner\" width=\"100%\">\n</p>\n\n<h1 align=\"center\">[TITLE]</h1>\n\n<p align=\"center\">\n  <em>A brief, compelling description of your project goes here.</em>\n</p>\n"
+            },
+            {
+                "id": "header-simple",
+                "name": "Simple Header",
+                "template": "# [TITLE]\n\n> A brief tagline describing what [REPO] does.\n"
+            },
+            {
+                "id": "about",
+                "name": "About Section",
+                "template": "## About\n\n**[TITLE]** is designed to solve [describe problem]. Built with a focus on simplicity and developer experience.\n\n### Key Features\n\n- Feature one description\n- Feature two description\n- Feature three description\n"
+            }
+        ]
+    },
+    {
+        "name": "Badge Studio",
+        "icon": "palette",
+        "isBadgeStudio": true,
+        "items": [
+            {
+                "id": "badge-custom",
+                "name": "Custom Badge",
+                "type": "custom",
+                "template": "![Badge](https://img.shields.io/badge/[LABEL]-[VALUE]-[COLOR]?style=[STYLE]&logo=[LOGO]&logoColor=[LOGO_COLOR]&labelColor=[LABEL_COLOR])"
+            },
+            {
+                "id": "badge-static",
+                "name": "Static Label",
+                "type": "static",
+                "template": "![Static](https://img.shields.io/badge/[LABEL]-[COLOR]?style=[STYLE])"
+            },
+            {
+                "id": "badge-github-v",
+                "name": "GitHub Release",
+                "type": "github",
+                "template": "![GitHub release](https://img.shields.io/github/v/release/[USER]/[REPO]?style=[STYLE])"
+            },
+            {
+                "id": "badge-github-commit",
+                "name": "GitHub Last Commit",
+                "type": "github",
+                "template": "![GitHub last commit](https://img.shields.io/github/last-commit/[USER]/[REPO]?style=[STYLE])"
+            },
+            {
+                "id": "badge-github-license",
+                "name": "GitHub License",
+                "type": "github",
+                "template": "![GitHub license](https://img.shields.io/github/license/[USER]/[REPO]?style=[STYLE])"
+            },
+            {
+                "id": "badge-github-stars",
+                "name": "GitHub Stars",
+                "type": "github",
+                "template": "![Stars](https://img.shields.io/github/stars/[USER]/[REPO]?style=[STYLE])"
+            },
+            {
+                "id": "badge-github-forks",
+                "name": "GitHub Forks",
+                "type": "github",
+                "template": "![Forks](https://img.shields.io/github/forks/[USER]/[REPO]?style=[STYLE])"
+            },
+            {
+                "id": "badge-github-issues",
+                "name": "GitHub Issues",
+                "type": "github",
+                "template": "![Issues](https://img.shields.io/github/issues/[USER]/[REPO]?style=[STYLE])"
+            },
+            {
+                "id": "badge-tech",
+                "name": "Technology Badge",
+                "type": "tech",
+                "template": "![[LABEL]](https://img.shields.io/badge/[LABEL]-[COLOR]?style=[STYLE]&logo=[LOGO]&logoColor=[LOGO_COLOR])"
+            }
+        ]
+    },
+    {
+        "name": "Installation & Usage",
+        "icon": "terminal",
+        "items": [
+            {
+                "id": "install-npm",
+                "name": "NPM Installation",
+                "template": "## Installation\n\n```bash\n# Clone the repository\ngit clone https://github.com/[USER]/[REPO].git\n\n# Navigate to directory\ncd [REPO]\n\n# Install dependencies\nnpm install\n\n# Start development server\nnpm run dev\n```\n"
+            },
+            {
+                "id": "usage",
+                "name": "Usage Example",
+                "template": "## Usage\n\n```javascript\nimport { example } from '[REPO]';\n\n// Basic usage\nconst result = example({\n  option: 'value'\n});\n\nconsole.log(result);\n```\n"
+            }
+        ]
+    },
+    {
+        "name": "Tech & Stack",
+        "icon": "layers",
+        "items": [
+            {
+                "id": "tech-stack",
+                "name": "Tech Stack Table",
+                "template": "## Tech Stack\n| Category | Technologies |\n|----------|-------------|\n| Frontend | React, TypeScript, Tailwind CSS |\n| Backend | Node.js, Express |\n| Database | PostgreSQL, Redis |\n| DevOps | Docker, GitHub Actions |\n"
+            }
+        ]
+    },
+    {
+        "name": "GitHub Elements",
+        "icon": "layout",
+        "items": [
+            {
+                "id": "feature-grid",
+                "name": "Feature Grid",
+                "template": "## Key Features\n<div align=\"center\">\n  <table>\n    <tr>\n      <td width=\"50%\" align=\"center\">\n        <img src=\"https://via.placeholder.com/400x200/0d1117/2f81f7?text=Feature+1\" width=\"100%\"><br>\n        <strong>Feature One</strong><br>\n        Description of feature one.\n      </td>\n      <td width=\"50%\" align=\"center\">\n        <img src=\"https://via.placeholder.com/400x200/0d1117/238636?text=Feature+2\" width=\"100%\"><br>\n        <strong>Feature Two</strong><br>\n        Description of feature two.\n      </td>\n    </tr>\n  </table>\n</div>\n"
+            },
+            {
+                "id": "roadmap",
+                "name": "Project Roadmap",
+                "template": "## Roadmap\n- [x] Initial Release\n- [x] Enhanced UI components\n- [/] Badge Studio customization\n- [ ] Mobile application support\n- [ ] API integration\n"
+            },
+            {
+                "id": "faq",
+                "name": "FAQ (Collapsible)",
+                "template": "## FAQ\n<details>\n<summary>How do I install this?</summary>\nFollow the <strong>Installation</strong> section above!\n</details>\n<details>\n<summary>Is this free to use?</summary>\nYes, this project is licensed under the MIT License.\n</details>\n"
+            },
+            {
+                "id": "stats",
+                "name": "GitHub Stats",
+                "template": "## GitHub Stats\n![[USER]'s GitHub stats](https://github-readme-stats.vercel.app/api?username=[USER]&show_icons=true&theme=github_dark)\n![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=[USER]&layout=compact&theme=github_dark)\n"
+            }
+        ]
+    },
+    {
+        "name": "Documentation",
+        "icon": "book-open",
+        "items": [
+            {
+                "id": "toc",
+                "name": "Table of Contents",
+                "template": "## Table of Contents\n- [About](#about)\n- [Installation](#installation)\n- [Usage](#usage)\n- [Contributing](#contributing)\n- [License](#license)\n"
+            },
+            {
+                "id": "api-docs",
+                "name": "API Reference",
+                "template": "## API Reference\n### `functionName(param)`\nDescription of what the function does.\n| Parameter | Type | Description |\n|-----------|------|-------------|\n| `param` | `string` | Description of parameter |\n**Returns:** `Object` - Description of return value\n**Example:**\n```javascript\nconst result = functionName('example');\n```\n"
+            }
+        ]
+    }
+]

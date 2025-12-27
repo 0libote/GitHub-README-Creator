@@ -14,7 +14,8 @@ const Utils = {
         return text
             .replace(/\[USER\]/g, vars.user || 'username')
             .replace(/\[REPO\]/g, vars.repo || 'repository')
-            .replace(/\[TITLE\]/g, vars.title || 'Project Title');
+            .replace(/\[TITLE\]/g, vars.title || 'Project Title')
+            .replace(/\[PROJECT_TITLE\]/g, vars.title || 'Project Title');
     },
 
     /**
