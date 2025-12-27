@@ -1,0 +1,16 @@
+{
+    "name": "Community",
+    "icon": "users",
+    "items": [
+        {
+            "id": "contributing",
+            "name": "Contributing",
+            "template": "## Contributing\nContributions are welcome! Please feel free to submit a Pull Request.\n1. Fork the repository\n2. Create your feature branch (`git checkout -b feature/AmazingFeature`)\n3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)\n4. Push to the branch (`git push origin feature/AmazingFeature`)\n5. Open a Pull Request\n"
+        },
+        {
+            "id": "authors",
+            "name": "Authors & Credits",
+            "template": "## Authors\n- **@[USER]** - *Initial work* - [GitHub](https://github.com/[USER])\nSee the list of [contributors](https://github.com/[USER]/[REPO]/contributors) who participated in this project.\n"
+        }
+    ]
+}

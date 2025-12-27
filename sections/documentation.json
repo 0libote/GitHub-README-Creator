@@ -1,0 +1,16 @@
+{
+    "name": "Documentation",
+    "icon": "book-open",
+    "items": [
+        {
+            "id": "toc",
+            "name": "Table of Contents",
+            "template": "## Table of Contents\n- [About](#about)\n- [Installation](#installation)\n- [Usage](#usage)\n- [Contributing](#contributing)\n- [License](#license)\n"
+        },
+        {
+            "id": "api-docs",
+            "name": "API Reference",
+            "template": "## API Reference\n### `functionName(param)`\nDescription of what the function does.\n| Parameter | Type | Description |\n|-----------|------|-------------|\n| `param` | `string` | Description of parameter |\n**Returns:** `Object` - Description of return value\n**Example:**\n```javascript\nconst result = functionName('example');\n```\n"
+        }
+    ]
+}
