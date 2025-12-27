@@ -214,19 +214,19 @@ function initFormattingToolbar() {
     function handleSelection() {
         const selection = editor.value.substring(editor.selectionStart, editor.selectionEnd);
         if (selection.trim().length > 0) {
-            const rect = getCursorXY(editor, editor.selectionEnd);
+            const rect = getCursorXY(editor, editor.selectionStart);
             const editorRect = editor.getBoundingClientRect();
 
-            toolbar.style.left = `${editorRect.left + rect.x - 40}px`;
+            // Position above the selection
+            toolbar.style.left = `${editorRect.left + rect.x}px`;
             toolbar.style.top = `${editorRect.top + rect.y - 45}px`;
+
             toolbar.classList.remove('hidden');
             requestAnimationFrame(() => {
-                toolbar.style.opacity = '1';
-                toolbar.style.transform = 'translateY(0)';
+                toolbar.classList.add('visible');
             });
         } else {
-            toolbar.style.opacity = '0';
-            toolbar.style.transform = 'translateY(5px)';
+            toolbar.classList.remove('visible');
             setTimeout(() => {
                 if (editor.selectionStart === editor.selectionEnd) {
                     toolbar.classList.add('hidden');
@@ -385,35 +385,42 @@ function init() {
     if (draft) {
         App.ui.editor.value = draft;
     } else {
-        App.ui.editor.value = `# 🚀 Welcome to README Creator
+        App.ui.editor.value = `# 🚀 GitHub README Creator
 
-Use this tool to build professional GitHub READMEs in minutes.
+Welcome to the ultimate tool for crafting professional, stunning GitHub repository profiles in seconds. This editor is designed to help you build your \`README.md\` using a modular, "click-and-paste" workflow.
 
-### 🛠️ How to use:
-1. **Set Variables**: Fill in your username and repository at the top.
-2. **Add Components**: Click items in the left sidebar to customize and copy snippets.
-3. **Badge Studio**: Use our enhanced studio to create fully custom badges with logos and colors.
-4. **Live Preview**: See your changes in real-time on the right.
-5. **Format Text**: Highlight any text in this editor to see the floating formatting toolbar.
-
----
-
-## Example Section: [TITLE]
-
-> [!TIP]
-> This is a placeholder section using the [PROJECT_TITLE] variable.
-
-### Project Goals
-- Goal 1: High performance
-- Goal 2: Intuitive UX
-- Goal 3: Modular design
-
-### Tech Stack
-![Built With](https://img.shields.io/badge/Made%20With-JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
+### ✨ Key Features
+- **🧩 Section Library**: Over 20+ pre-designed sections including Features, Tech Stack, API Docs, and more.
+- **🎨 Badge Studio**: Create custom, high-quality badges with logos, custom colors, and various styles.
+- **⚡ Live Preview**: See your changes rendered instantly with GitHub-faithful styling.
+- **🔧 Variable Injection**: Use placeholders like \`[USER]\`, \`[REPO]\`, and \`[TITLE]\` for dynamic updates.
+- **📝 Format Toolbar**: Highlight any text to toggle bold, italic, or code formatting.
 
 ---
 
-*Ready to start? Clear this draft using the "Reset Draft" button at the bottom left.*
+### 📖 How to Use This App
+
+1. **Configure Variables**: Update the **User**, **Repo**, and **Project Title** fields at the top of the sidebar.
+2. **Browse Components**: Click any category in the left sidebar (e.g., "🎯 Basics" or "🖌️ Badge Studio").
+3. **Customize Snippet**: A modal will open where you can tweak the template or badge settings.
+4. **Copy & Paste**: Click **"Copy Snippet"** in the modal, then paste it here in this editor.
+5. **Download**: Once you're happy with your README, click the **Download** button in the header.
+
+---
+
+## 🛠️ Example: [TITLE]
+
+> [!NOTE]
+> This is a preview of how the **[PROJECT_TITLE]** looks when using variable injection.
+
+### Current Project Metadata:
+- **Owner**: [USER]
+- **Repository**: [REPO]
+
+### Quick Tech Stack Preview
+![Tech Stack](https://img.shields.io/badge/Stack-JavaScript_|_CSS_|_HTML-2ea44f?style=for-the-badge&logo=github)
+
+*Ready to start fresh? Click the "Clear Draft" button in the header to wipe this tutorial.*
 `;
     }
 
