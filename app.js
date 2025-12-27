@@ -122,9 +122,21 @@ function syncBadge() {
     const label = encodeURIComponent(App.ui.badgeLabel.value || 'Label');
     const value = encodeURIComponent(App.ui.badgeValue.value || 'Value');
     const color = App.ui.badgeColor.value.replace('#', '');
+    const labelColor = App.ui.badgeLabelColor.value.replace('#', '');
+    const logo = encodeURIComponent(App.ui.badgeLogo.value || '');
+    const logoColor = encodeURIComponent(App.ui.badgeLogoColor.value || '');
     const style = App.ui.badgeStyle.value;
 
-    App.ui.modalEditor.value = `![Badge](https://img.shields.io/badge/${label}-${value}-${color}?style=${style})`;
+    let template = App.currentSection.template;
+    template = template.replace(/\[LABEL\]/g, label);
+    template = template.replace(/\[VALUE\]/g, value);
+    template = template.replace(/\[COLOR\]/g, color);
+    template = template.replace(/\[STYLE\]/g, style);
+    template = template.replace(/\[LOGO\]/g, logo);
+    template = template.replace(/\[LOGO_COLOR\]/g, logoColor);
+    template = template.replace(/\[LABEL_COLOR\]/g, labelColor);
+
+    App.ui.modalEditor.value = template;
     syncModalPreview();
 }
 
@@ -154,6 +166,103 @@ function showToast(message, type = 'success') {
         App.ui.toast.classList.remove('translate-y-0', 'opacity-100');
         App.ui.toast.classList.add('translate-y-full', 'opacity-0');
     }, 2500);
+}
+
+/**
+ * Initialize the formatting toolbar
+ */
+function initFormattingToolbar() {
+    const editor = App.ui.editor;
+    const toolbar = document.getElementById('format-toolbar');
+
+    editor.addEventListener('select', () => handleSelection());
+    editor.addEventListener('mouseup', () => {
+        setTimeout(handleSelection, 10);
+    });
+
+    function handleSelection() {
+        const selection = editor.value.substring(editor.selectionStart, editor.selectionEnd);
+        if (selection.trim().length > 0) {
+            const rect = getCursorXY(editor, editor.selectionEnd);
+            const editorRect = editor.getBoundingClientRect();
+
+            toolbar.style.left = `${editorRect.left + rect.x - 40}px`;
+            toolbar.style.top = `${editorRect.top + rect.y - 45}px`;
+            toolbar.classList.remove('hidden');
+            requestAnimationFrame(() => {
+                toolbar.style.opacity = '1';
+                toolbar.style.transform = 'translateY(0)';
+            });
+        } else {
+            toolbar.style.opacity = '0';
+            toolbar.style.transform = 'translateY(5px)';
+            setTimeout(() => {
+                if (editor.selectionStart === editor.selectionEnd) {
+                    toolbar.classList.add('hidden');
+                }
+            }, 200);
+        }
+    }
+
+    toolbar.querySelectorAll('button').forEach(btn => {
+        btn.addEventListener('mousedown', (e) => {
+            e.preventDefault();
+            const format = btn.getAttribute('data-format');
+            applyFormat(format);
+        });
+    });
+
+    function applyFormat(type) {
+        const start = editor.selectionStart;
+        const end = editor.selectionEnd;
+        const text = editor.value;
+        const selectedText = text.substring(start, end);
+        let replacement = '';
+
+        switch (type) {
+            case 'bold':
+                replacement = `**${selectedText}**`;
+                break;
+            case 'italic':
+                replacement = `*${selectedText}*`;
+                break;
+            case 'inline-code':
+                replacement = `\`${selectedText}\``;
+                break;
+            case 'link':
+                replacement = `[${selectedText}](url)`;
+                break;
+        }
+
+        editor.value = text.substring(0, start) + replacement + text.substring(end);
+        editor.focus();
+        editor.setSelectionRange(start, start + replacement.length);
+        updatePreview();
+    }
+
+    // Helper to get cursor coordinates
+    function getCursorXY(input, selectionPoint) {
+        const { offsetLeft: elLeft, offsetTop: elTop } = input;
+        const style = window.getComputedStyle(input);
+        const div = document.createElement('div');
+        const copyStyle = Array.from(style);
+        copyStyle.forEach((prop) => {
+            div.style[prop] = style[prop];
+        });
+        div.style.position = 'absolute';
+        div.style.visibility = 'hidden';
+        div.style.whiteSpace = 'pre-wrap';
+        div.style.width = input.clientWidth + 'px';
+        div.innerHTML = input.value.substring(0, selectionPoint).replace(/\n/g, '<br/>') + '<span>|</span>';
+        document.body.appendChild(div);
+        const span = div.querySelector('span');
+        const { offsetLeft: spanLeft, offsetTop: spanTop } = span;
+        document.body.removeChild(div);
+        return {
+            x: spanLeft,
+            y: spanTop - input.scrollTop
+        };
+    }
 }
 
 /**
@@ -219,6 +328,9 @@ function init() {
         badgeLabel: document.getElementById('input-badge-label'),
         badgeValue: document.getElementById('input-badge-value'),
         badgeColor: document.getElementById('input-badge-color'),
+        badgeLabelColor: document.getElementById('input-badge-label-color'),
+        badgeLogo: document.getElementById('input-badge-logo'),
+        badgeLogoColor: document.getElementById('input-badge-logo-color'),
         badgeStyle: document.getElementById('input-badge-style'),
 
         // Layout elements
@@ -322,9 +434,20 @@ Add your usage instructions here.
     });
 
     // Badge controls
-    [App.ui.badgeLabel, App.ui.badgeValue, App.ui.badgeColor, App.ui.badgeStyle].forEach(el => {
+    [
+        App.ui.badgeLabel,
+        App.ui.badgeValue,
+        App.ui.badgeColor,
+        App.ui.badgeLabelColor,
+        App.ui.badgeLogo,
+        App.ui.badgeLogoColor,
+        App.ui.badgeStyle
+    ].forEach(el => {
         if (el) el.addEventListener('input', syncBadge);
     });
+
+    // Initialize formatting toolbar
+    initFormattingToolbar();
 
     // Initialize resizer
     initResizer();

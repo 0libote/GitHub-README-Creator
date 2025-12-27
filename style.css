@@ -291,6 +291,7 @@ body {
 .resizing {
     cursor: col-resize !important;
     user-select: none !important;
+    user-select: none !important;
 }
 
 .resizing * {
@@ -345,4 +346,24 @@ input::placeholder {
 /* Selection */
 ::selection {
     background-color: rgba(47, 129, 247, 0.4);
+}
+
+/* Formatting Toolbar */
+#format-toolbar {
+    transform: translateY(10px);
+    pointer-events: auto;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -2px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(12px);
+}
+
+#format-toolbar button:hover {
+    background-color: var(--github-btn);
+}
+
+#format-toolbar i {
+    color: var(--github-muted);
+}
+
+#format-toolbar button:hover i {
+    color: var(--github-text);
 }

@@ -19,6 +19,10 @@
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
+    <!-- Notepad Favicon -->
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect x=%2220%22 y=%2220%22 width=%2260%22 height=%2270%22 rx=%225%22 fill=%22%23fef3c7%22 stroke=%22%23d97706%22 stroke-width=%224%22/><path d=%22M30 10 L30 30 M50 10 L50 30 M70 10 L70 30%22 stroke=%22%234b5563%22 stroke-width=%226%22 stroke-linecap=%22round%22/><rect x=%2220%22 y=%2220%22 width=%2260%22 height=%2210%22 rx=%222%22 fill=%22%23d97706%22/><path d=%22M35 45 H65 M35 60 H65 M35 75 H55%22 stroke=%22%23d97706%22 stroke-width=%223%22 stroke-linecap=%22round%22/></svg>">
+
     <script>
         tailwind.config = {
             darkMode: 'class',
@@ -176,7 +180,7 @@
                 <!-- Editor -->
                 <div class="w-full lg:w-1/2 p-4 flex flex-col gap-4 border-r border-github-border">
                     <!-- Badge Controls (hidden by default) -->
-                    <div id="badge-controls" class="hidden space-y-3">
+                    <div id="badge-controls" class="hidden space-y-4">
                         <div class="grid grid-cols-2 gap-3">
                             <div>
                                 <label class="text-xs text-github-muted block mb-1">Label</label>
@@ -189,11 +193,16 @@
                                     class="w-full bg-github-canvas border border-github-border rounded px-2 py-1.5 text-sm outline-none focus:border-github-accent">
                             </div>
                         </div>
-                        <div class="grid grid-cols-2 gap-3">
+                        <div class="grid grid-cols-3 gap-3">
                             <div>
                                 <label class="text-xs text-github-muted block mb-1">Color</label>
                                 <input type="color" id="input-badge-color" value="#238636"
-                                    class="w-full h-8 bg-github-canvas border border-github-border rounded cursor-pointer">
+                                    class="w-full h-8 bg-github-canvas border border-github-border rounded cursor-pointer p-0.5">
+                            </div>
+                            <div>
+                                <label class="text-xs text-github-muted block mb-1">Label Color</label>
+                                <input type="color" id="input-badge-label-color" value="#555555"
+                                    class="w-full h-8 bg-github-canvas border border-github-border rounded cursor-pointer p-0.5">
                             </div>
                             <div>
                                 <label class="text-xs text-github-muted block mb-1">Style</label>
@@ -205,6 +214,18 @@
                                     <option value="plastic">Plastic</option>
                                     <option value="social">Social</option>
                                 </select>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-2 gap-3">
+                            <div>
+                                <label class="text-xs text-github-muted block mb-1">Logo (Simple Icons)</label>
+                                <input type="text" id="input-badge-logo" placeholder="e.g. github, typescript"
+                                    class="w-full bg-github-canvas border border-github-border rounded px-2 py-1.5 text-sm outline-none focus:border-github-accent">
+                            </div>
+                            <div>
+                                <label class="text-xs text-github-muted block mb-1">Logo Color</label>
+                                <input type="text" id="input-badge-logo-color" placeholder="white"
+                                    class="w-full bg-github-canvas border border-github-border rounded px-2 py-1.5 text-sm outline-none focus:border-github-accent">
                             </div>
                         </div>
                     </div>
@@ -243,6 +264,31 @@
         class="fixed bottom-6 left-1/2 -translate-x-1/2 px-4 py-2.5 bg-github-header border border-github-border rounded-lg shadow-xl z-[200] flex items-center gap-2 transform translate-y-full opacity-0 transition-all duration-300 pointer-events-none">
         <i data-lucide="check-circle" class="w-4 h-4 text-github-success"></i>
         <span id="toast-ui-msg" class="text-sm">Saved</span>
+    </div>
+
+    <!-- Floating Toolbar -->
+    <div id="format-toolbar"
+        class="fixed hidden bg-github-header border border-github-border rounded shadow-xl p-1 z-[100] flex gap-1 opacity-0 transition-opacity duration-200">
+        <button data-format="bold"
+            class="p-1.5 hover:bg-github-btn rounded text-github-muted hover:text-github-text transition-colors"
+            title="Bold">
+            <i data-lucide="bold" class="w-4 h-4"></i>
+        </button>
+        <button data-format="italic"
+            class="p-1.5 hover:bg-github-btn rounded text-github-muted hover:text-github-text transition-colors"
+            title="Italic">
+            <i data-lucide="italic" class="w-4 h-4"></i>
+        </button>
+        <button data-format="inline-code"
+            class="p-1.5 hover:bg-github-btn rounded text-github-muted hover:text-github-text transition-colors"
+            title="Inline Code">
+            <i data-lucide="code" class="w-4 h-4"></i>
+        </button>
+        <button data-format="link"
+            class="p-1.5 hover:bg-github-btn rounded text-github-muted hover:text-github-text transition-colors"
+            title="Link">
+            <i data-lucide="link" class="w-4 h-4"></i>
+        </button>
     </div>
 
     <!-- Scripts -->
