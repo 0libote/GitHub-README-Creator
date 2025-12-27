@@ -11,6 +11,7 @@ const App = {
         title: ''
     },
     ui: {},
+    sections: [],
     currentSection: null,
     isResizing: false
 };
@@ -43,7 +44,7 @@ function updatePreview() {
 function renderSidebar() {
     App.ui.sectionsList.innerHTML = '';
 
-    window.SECTIONS.forEach(category => {
+    App.sections.forEach(category => {
         const group = document.createElement('div');
         group.className = 'section-group';
 
@@ -69,6 +70,21 @@ function renderSidebar() {
     });
 
     Utils.initIcons();
+}
+
+/**
+ * Load sections from JSON
+ */
+async function loadSections() {
+    try {
+        App.ui.sectionsList.innerHTML = '<div class="p-4 text-xs text-github-muted">Loading components...</div>';
+        const response = await fetch('sections.json');
+        App.sections = await response.json();
+        renderSidebar();
+    } catch (err) {
+        console.error('Failed to load sections:', err);
+        App.ui.sectionsList.innerHTML = '<div class="p-4 text-xs text-github-danger">Error loading components</div>';
+    }
 }
 
 /**
@@ -128,6 +144,11 @@ function syncBadge() {
     const style = App.ui.badgeStyle.value;
 
     let template = App.currentSection.template;
+
+    // Auto-inject variables first
+    template = Utils.injectVariables(template, App.vars);
+
+    // Then inject badge metadata
     template = template.replace(/\[LABEL\]/g, label);
     template = template.replace(/\[VALUE\]/g, value);
     template = template.replace(/\[COLOR\]/g, color);
@@ -452,8 +473,8 @@ Add your usage instructions here.
     // Initialize resizer
     initResizer();
 
-    // Render sidebar sections
-    renderSidebar();
+    // Load sections from JSON
+    loadSections();
 
     // Initialize icons
     Utils.initIcons();
