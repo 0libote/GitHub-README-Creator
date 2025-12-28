@@ -7,54 +7,93 @@
             "id": "badge-custom",
             "name": "Custom Badge",
             "type": "custom",
+            "fields": [
+                "label",
+                "value",
+                "color",
+                "labelColor",
+                "style",
+                "logo",
+                "logoColor"
+            ],
             "template": "![Badge](https://img.shields.io/badge/[LABEL]-[VALUE]-[COLOR]?style=[STYLE]&logo=[LOGO]&logoColor=[LOGO_COLOR]&labelColor=[LABEL_COLOR])"
         },
         {
             "id": "badge-static",
             "name": "Static Label",
             "type": "static",
+            "fields": [
+                "label",
+                "color",
+                "style"
+            ],
             "template": "![Static](https://img.shields.io/badge/[LABEL]-[COLOR]?style=[STYLE])"
         },
         {
             "id": "badge-github-v",
             "name": "GitHub Release",
             "type": "github",
+            "fields": [
+                "style"
+            ],
             "template": "![GitHub release](https://img.shields.io/github/v/release/[USER]/[REPO]?style=[STYLE])"
         },
         {
             "id": "badge-github-commit",
             "name": "GitHub Last Commit",
             "type": "github",
+            "fields": [
+                "style"
+            ],
             "template": "![GitHub last commit](https://img.shields.io/github/last-commit/[USER]/[REPO]?style=[STYLE])"
         },
         {
             "id": "badge-github-license",
             "name": "GitHub License",
             "type": "github",
+            "fields": [
+                "style"
+            ],
             "template": "![GitHub license](https://img.shields.io/github/license/[USER]/[REPO]?style=[STYLE])"
         },
         {
             "id": "badge-github-stars",
             "name": "GitHub Stars",
             "type": "github",
+            "fields": [
+                "style"
+            ],
             "template": "![Stars](https://img.shields.io/github/stars/[USER]/[REPO]?style=[STYLE])"
         },
         {
             "id": "badge-github-forks",
             "name": "GitHub Forks",
             "type": "github",
+            "fields": [
+                "style"
+            ],
             "template": "![Forks](https://img.shields.io/github/forks/[USER]/[REPO]?style=[STYLE])"
         },
         {
             "id": "badge-github-issues",
             "name": "GitHub Issues",
             "type": "github",
+            "fields": [
+                "style"
+            ],
             "template": "![Issues](https://img.shields.io/github/issues/[USER]/[REPO]?style=[STYLE])"
         },
         {
             "id": "badge-tech",
             "name": "Technology Badge",
             "type": "tech",
+            "fields": [
+                "label",
+                "color",
+                "style",
+                "logo",
+                "logoColor"
+            ],
             "template": "![[LABEL]](https://img.shields.io/badge/[LABEL]-[COLOR]?style=[STYLE]&logo=[LOGO]&logoColor=[LOGO_COLOR])"
         }
     ]

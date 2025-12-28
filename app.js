@@ -13,7 +13,8 @@ const App = {
     ui: {},
     sections: [],
     currentSection: null,
-    isResizing: false
+    isResizing: false,
+    collapsedSections: {}
 };
 
 /**
@@ -45,25 +46,40 @@ function updatePreview() {
 function renderSidebar() {
     App.ui.sectionsList.innerHTML = '';
 
-    App.sections.forEach(category => {
+    App.sections.forEach((category, index) => {
         const group = document.createElement('div');
-        group.className = 'section-group';
+        const isCollapsed = App.collapsedSections[category.name] || false;
+        group.className = `section-group ${isCollapsed ? 'collapsed' : ''}`;
 
         group.innerHTML = `
-            <div class="section-header">
+            <div class="section-header" data-category="${category.name}">
                 <i data-lucide="${category.icon}" class="section-icon"></i>
                 <span class="section-title">${category.name}</span>
+                <i data-lucide="chevron-down" class="section-chevron"></i>
             </div>
-            <div class="section-items"></div>
+            <div class="section-items" style="max-height: 500px;"></div>
         `;
 
         const itemsContainer = group.querySelector('.section-items');
+        const header = group.querySelector('.section-header');
+
+        header.addEventListener('click', () => {
+            const nowCollapsed = !group.classList.contains('collapsed');
+            group.classList.toggle('collapsed');
+            App.collapsedSections[category.name] = nowCollapsed;
+
+            // Persist setting
+            Utils.storage.set('collapsed_sections', JSON.stringify(App.collapsedSections));
+        });
 
         category.items.forEach(item => {
             const button = document.createElement('button');
             button.className = 'section-btn';
             button.textContent = item.name;
-            button.addEventListener('click', () => openModal(item, category));
+            button.addEventListener('click', (e) => {
+                e.stopPropagation();
+                openModal(item, category);
+            });
             itemsContainer.appendChild(button);
         });
 
@@ -108,6 +124,18 @@ function openModal(item, category) {
 
     if (category.isBadgeStudio) {
         App.ui.badgeControls.classList.remove('hidden');
+
+        // Toggle individual fields
+        const fields = item.fields || [];
+        App.ui.badgeControls.querySelectorAll('[data-field]').forEach(container => {
+            const fieldName = container.getAttribute('data-field');
+            if (fields.includes(fieldName)) {
+                container.classList.remove('hidden');
+            } else {
+                container.classList.add('hidden');
+            }
+        });
+
         syncBadge();
     } else {
         App.ui.badgeControls.classList.add('hidden');
@@ -159,13 +187,13 @@ function syncBadge() {
     template = Utils.injectVariables(template, App.vars);
 
     // Then inject badge metadata
-    template = template.replace(/\[LABEL\]/g, label);
-    template = template.replace(/\[VALUE\]/g, value);
-    template = template.replace(/\[COLOR\]/g, color);
-    template = template.replace(/\[STYLE\]/g, style);
-    template = template.replace(/\[LOGO\]/g, logo);
-    template = template.replace(/\[LOGO_COLOR\]/g, logoColor);
-    template = template.replace(/\[LABEL_COLOR\]/g, labelColor);
+    template = template.replace(/\[LABEL\]/g, label || 'Label');
+    template = template.replace(/\[VALUE\]/g, value || 'Value');
+    template = template.replace(/\[COLOR\]/g, color || 'blue');
+    template = template.replace(/\[STYLE\]/g, style || 'flat');
+    template = template.replace(/\[LOGO\]/g, logo || '');
+    template = template.replace(/\[LOGO_COLOR\]/g, logoColor || 'white');
+    template = template.replace(/\[LABEL_COLOR\]/g, labelColor || '555');
 
     App.ui.modalEditor.value = template;
     syncModalPreview();
@@ -212,14 +240,27 @@ function initFormattingToolbar() {
     });
 
     function handleSelection() {
-        const selection = editor.value.substring(editor.selectionStart, editor.selectionEnd);
+        const start = editor.selectionStart;
+        const end = editor.selectionEnd;
+        const selection = editor.value.substring(start, end);
+
         if (selection.trim().length > 0) {
-            const rect = getCursorXY(editor, editor.selectionStart);
+            const startPos = getCursorXY(editor, start);
+            const endPos = getCursorXY(editor, end);
             const editorRect = editor.getBoundingClientRect();
 
-            // Position above the selection
-            toolbar.style.left = `${editorRect.left + rect.x}px`;
-            toolbar.style.top = `${editorRect.top + rect.y - 45}px`;
+            // Calculate center point
+            // If on same line, use midpoint of X. If multiple lines, use start X + small offset or just start X.
+            let centerX = startPos.x;
+            if (startPos.y === endPos.y) {
+                centerX = (startPos.x + endPos.x) / 2;
+            } else {
+                // For multi-line, centering is tricky, so we'll center relative to the first line's start
+                centerX = startPos.x + 10;
+            }
+
+            toolbar.style.left = `${editorRect.left + centerX}px`;
+            toolbar.style.top = `${editorRect.top + startPos.y - 45}px`;
 
             toolbar.classList.remove('hidden');
             requestAnimationFrame(() => {
@@ -380,47 +421,33 @@ function init() {
         varTitle: document.getElementById('var-title')
     };
 
+    // Load collapsed states
+    try {
+        const savedCollapsed = Utils.storage.get('collapsed_sections');
+        if (savedCollapsed) App.collapsedSections = JSON.parse(savedCollapsed);
+    } catch (e) {
+        console.error('Failed to load collapsed sections:', e);
+    }
+
     // Load saved draft or default
     const draft = Utils.storage.get('readme_draft_v4');
     if (draft) {
         App.ui.editor.value = draft;
     } else {
-        App.ui.editor.value = `# 🚀 GitHub README Creator
+        App.ui.editor.value = `# 🚀 Get Started
 
-Welcome to the ultimate tool for crafting professional, stunning GitHub repository profiles in seconds. This editor is designed to help you build your \`README.md\` using a modular, "click-and-paste" workflow.
+Quickly build your professional \`README.md\` by selecting components from the sidebar.
 
-### ✨ Key Features
-- **🧩 Section Library**: Over 20+ pre-designed sections including Features, Tech Stack, API Docs, and more.
-- **🎨 Badge Studio**: Create custom, high-quality badges with logos, custom colors, and various styles.
-- **⚡ Live Preview**: See your changes rendered instantly with GitHub-faithful styling.
-- **🔧 Variable Injection**: Use placeholders like \`[USER]\`, \`[REPO]\`, and \`[TITLE]\` for dynamic updates.
-- **📝 Format Toolbar**: Highlight any text to toggle bold, italic, or code formatting.
-
----
-
-### 📖 How to Use This App
-
-1. **Configure Variables**: Update the **User**, **Repo**, and **Project Title** fields at the top of the sidebar.
-2. **Browse Components**: Click any category in the left sidebar (e.g., "🎯 Basics" or "🖌️ Badge Studio").
-3. **Customize Snippet**: A modal will open where you can tweak the template or badge settings.
-4. **Copy & Paste**: Click **"Copy Snippet"** in the modal, then paste it here in this editor.
-5. **Download**: Once you're happy with your README, click the **Download** button in the header.
+### ⚡ Quick Tips
+- **Variables**: Fill in your GitHub username and repo name at the top to auto-fill templates.
+- **Components**: Click any category on the left to browse and customize snippets.
+- **Format**: Highlight text in this editor to see the formatting toolbar.
+- **Live Preview**: Your changes are rendered instantly on the right.
 
 ---
-
-## 🛠️ Example: [TITLE]
-
-> [!NOTE]
-> This is a preview of how the **[PROJECT_TITLE]** looks when using variable injection.
-
-### Current Project Metadata:
-- **Owner**: [USER]
-- **Repository**: [REPO]
-
-### Quick Tech Stack Preview
-![Tech Stack](https://img.shields.io/badge/Stack-JavaScript_|_CSS_|_HTML-2ea44f?style=for-the-badge&logo=github)
-
-*Ready to start fresh? Click the "Clear Draft" button in the header to wipe this tutorial.*
+## 📦 Current Project: [TITLE]
+- **Maintainer**: @[USER]
+- **Repo**: [REPO]
 `;
     }
 
