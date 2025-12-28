@@ -5,12 +5,37 @@
         {
             "id": "toc",
             "name": "Table of Contents",
-            "template": "## Table of Contents\n- [About](#about)\n- [Installation](#installation)\n- [Usage](#usage)\n- [Contributing](#contributing)\n- [License](#license)\n"
+            "template": "## Table of Contents\n\n- [About](#about)\n- [Installation](#installation)\n- [Usage](#usage)\n- [Contributing](#contributing)\n- [License](#license)\n"
+        },
+        {
+            "id": "toc-detailed",
+            "name": "Table of Contents (Detailed)",
+            "template": "## Table of Contents\n\n<details>\n<summary>Click to expand</summary>\n\n- [About](#about)\n- [Features](#features)\n- [Getting Started](#getting-started)\n  - [Prerequisites](#prerequisites)\n  - [Installation](#installation)\n- [Usage](#usage)\n  - [Basic Usage](#basic-usage)\n  - [Advanced Usage](#advanced-usage)\n- [API Reference](#api-reference)\n- [Configuration](#configuration)\n- [Contributing](#contributing)\n- [License](#license)\n- [Contact](#contact)\n\n</details>\n"
         },
         {
             "id": "api-docs",
             "name": "API Reference",
-            "template": "## API Reference\n### `functionName(param)`\nDescription of what the function does.\n| Parameter | Type | Description |\n|-----------|------|-------------|\n| `param` | `string` | Description of parameter |\n**Returns:** `Object` - Description of return value\n**Example:**\n```javascript\nconst result = functionName('example');\n```\n"
+            "template": "## API Reference\n\n### `functionName(param)`\n\nDescription of what the function does.\n\n| Parameter | Type | Description |\n|-----------|------|-------------|\n| `param` | `string` | Description of parameter |\n\n**Returns:** `Object` - Description of return value\n\n**Example:**\n\n```javascript\nconst result = functionName('example');\n```\n"
+        },
+        {
+            "id": "env-vars",
+            "name": "Environment Variables",
+            "template": "## Environment Variables\n\nCreate a `.env` file in the root directory:\n\n```env\n# Required\nAPI_KEY=your_api_key\nDATABASE_URL=postgresql://user:pass@localhost:5432/db\n\n# Optional\nPORT=3000\nNODE_ENV=development\nLOG_LEVEL=debug\n```\n\n| Variable | Required | Default | Description |\n|----------|----------|---------|-------------|\n| `API_KEY` | Yes | - | Your API key |\n| `DATABASE_URL` | Yes | - | Database connection string |\n| `PORT` | No | `3000` | Server port |\n"
+        },
+        {
+            "id": "configuration",
+            "name": "Configuration",
+            "template": "## Configuration\n\nConfigure the application using `config.json` or environment variables:\n\n```json\n{\n  \"port\": 3000,\n  \"database\": {\n    \"host\": \"localhost\",\n    \"port\": 5432,\n    \"name\": \"myapp\"\n  },\n  \"features\": {\n    \"enableCache\": true,\n    \"logLevel\": \"info\"\n  }\n}\n```\n\n### Configuration Options\n\n| Option | Type | Default | Description |\n|--------|------|---------|-------------|\n| `port` | number | 3000 | Server port |\n| `database.host` | string | localhost | Database host |\n| `features.enableCache` | boolean | true | Enable caching |\n"
+        },
+        {
+            "id": "architecture",
+            "name": "Architecture",
+            "template": "## Architecture\n\n```\n[REPO]/\n├── src/\n│   ├── components/     # UI components\n│   ├── services/       # Business logic\n│   ├── utils/          # Helper functions\n│   └── index.js        # Entry point\n├── tests/              # Test files\n├── docs/               # Documentation\n└── config/             # Configuration files\n```\n\n### Key Components\n\n- **Component A** - Description of responsibility\n- **Component B** - Description of responsibility\n- **Component C** - Description of responsibility\n"
+        },
+        {
+            "id": "changelog-link",
+            "name": "Changelog",
+            "template": "## Changelog\n\nSee [CHANGELOG.md](CHANGELOG.md) for a list of changes and version history.\n\n### Recent Changes\n\n- **v1.2.0** - Added new feature X\n- **v1.1.0** - Improved performance\n- **v1.0.0** - Initial release\n"
         }
     ]
 }

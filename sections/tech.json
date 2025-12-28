@@ -5,7 +5,27 @@
         {
             "id": "tech-stack",
             "name": "Tech Stack Table",
-            "template": "## Tech Stack\n| Category | Technologies |\n|----------|-------------|\n| Frontend | React, TypeScript, Tailwind CSS |\n| Backend | Node.js, Express |\n| Database | PostgreSQL, Redis |\n| DevOps | Docker, GitHub Actions |\n"
+            "template": "## Tech Stack\n\n| Category | Technologies |\n|----------|-------------|\n| Frontend | React, TypeScript, Tailwind CSS |\n| Backend | Node.js, Express |\n| Database | PostgreSQL, Redis |\n| DevOps | Docker, GitHub Actions |\n"
+        },
+        {
+            "id": "built-with",
+            "name": "Built With",
+            "template": "## Built With\n\n- [React](https://reactjs.org/) - Frontend framework\n- [Node.js](https://nodejs.org/) - Runtime environment\n- [Express](https://expressjs.com/) - Web framework\n- [PostgreSQL](https://postgresql.org/) - Database\n- [Tailwind CSS](https://tailwindcss.com/) - Styling\n"
+        },
+        {
+            "id": "tech-badges",
+            "name": "Tech Stack (Badges)",
+            "template": "## Tech Stack\n\n![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)\n![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)\n![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)\n![Express](https://img.shields.io/badge/Express-000000?style=for-the-badge&logo=express&logoColor=white)\n![PostgreSQL](https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white)\n![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)\n"
+        },
+        {
+            "id": "dependencies",
+            "name": "Key Dependencies",
+            "template": "## Dependencies\n\n### Core\n\n| Package | Version | Purpose |\n|---------|---------|--------|\n| `react` | ^18.0.0 | UI library |\n| `express` | ^4.18.0 | HTTP server |\n| `typescript` | ^5.0.0 | Type safety |\n\n### Dev Dependencies\n\n| Package | Version | Purpose |\n|---------|---------|--------|\n| `jest` | ^29.0.0 | Testing |\n| `eslint` | ^8.0.0 | Linting |\n| `prettier` | ^3.0.0 | Formatting |\n"
+        },
+        {
+            "id": "tech-icons",
+            "name": "Tech Icons Grid",
+            "template": "## Tech Stack\n\n<p align=\"center\">\n  <img src=\"https://skillicons.dev/icons?i=react,ts,nodejs,express,postgres,docker,git,github\" alt=\"Tech Stack\" />\n</p>\n"
         }
     ]
 }

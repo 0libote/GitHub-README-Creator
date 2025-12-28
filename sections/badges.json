@@ -84,6 +84,82 @@
             "template": "![Issues](https://img.shields.io/github/issues/[USER]/[REPO]?style=[STYLE])"
         },
         {
+            "id": "badge-github-prs",
+            "name": "GitHub Pull Requests",
+            "type": "github",
+            "fields": [
+                "style"
+            ],
+            "template": "![Pull Requests](https://img.shields.io/github/issues-pr/[USER]/[REPO]?style=[STYLE])"
+        },
+        {
+            "id": "badge-github-contributors",
+            "name": "GitHub Contributors",
+            "type": "github",
+            "fields": [
+                "style"
+            ],
+            "template": "![Contributors](https://img.shields.io/github/contributors/[USER]/[REPO]?style=[STYLE])"
+        },
+        {
+            "id": "badge-npm-version",
+            "name": "NPM Version",
+            "type": "npm",
+            "fields": [
+                "label",
+                "style"
+            ],
+            "template": "![npm](https://img.shields.io/npm/v/[LABEL]?style=[STYLE])"
+        },
+        {
+            "id": "badge-npm-downloads",
+            "name": "NPM Downloads",
+            "type": "npm",
+            "fields": [
+                "label",
+                "style"
+            ],
+            "template": "![npm downloads](https://img.shields.io/npm/dm/[LABEL]?style=[STYLE])"
+        },
+        {
+            "id": "badge-build",
+            "name": "Build Status",
+            "type": "github",
+            "fields": [
+                "style"
+            ],
+            "template": "![Build Status](https://img.shields.io/github/actions/workflow/status/[USER]/[REPO]/ci.yml?style=[STYLE])"
+        },
+        {
+            "id": "badge-codecov",
+            "name": "Code Coverage",
+            "type": "codecov",
+            "fields": [
+                "style"
+            ],
+            "template": "![Coverage](https://img.shields.io/codecov/c/github/[USER]/[REPO]?style=[STYLE])"
+        },
+        {
+            "id": "badge-discord",
+            "name": "Discord",
+            "type": "social",
+            "fields": [
+                "value",
+                "style"
+            ],
+            "template": "![Discord](https://img.shields.io/discord/[VALUE]?style=[STYLE]&logo=discord&logoColor=white)"
+        },
+        {
+            "id": "badge-twitter",
+            "name": "Twitter Follow",
+            "type": "social",
+            "fields": [
+                "label",
+                "style"
+            ],
+            "template": "![Twitter Follow](https://img.shields.io/twitter/follow/[LABEL]?style=[STYLE]&logo=twitter)"
+        },
+        {
             "id": "badge-tech",
             "name": "Technology Badge",
             "type": "tech",

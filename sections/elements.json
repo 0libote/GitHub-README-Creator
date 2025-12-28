@@ -5,22 +5,67 @@
         {
             "id": "feature-grid",
             "name": "Feature Grid",
-            "template": "## Key Features\n<div align=\"center\">\n  <table>\n    <tr>\n      <td width=\"50%\" align=\"center\">\n        <img src=\"https://via.placeholder.com/400x200/0d1117/2f81f7?text=Feature+1\" width=\"100%\"><br>\n        <strong>Feature One</strong><br>\n        Description of feature one.\n      </td>\n      <td width=\"50%\" align=\"center\">\n        <img src=\"https://via.placeholder.com/400x200/0d1117/238636?text=Feature+2\" width=\"100%\"><br>\n        <strong>Feature Two</strong><br>\n        Description of feature two.\n      </td>\n    </tr>\n  </table>\n</div>\n"
+            "template": "## Key Features\n\n<div align=\"center\">\n  <table>\n    <tr>\n      <td width=\"50%\" align=\"center\">\n        <img src=\"https://via.placeholder.com/400x200/0d1117/2f81f7?text=Feature+1\" width=\"100%\"><br>\n        <strong>Feature One</strong><br>\n        Description of feature one.\n      </td>\n      <td width=\"50%\" align=\"center\">\n        <img src=\"https://via.placeholder.com/400x200/0d1117/238636?text=Feature+2\" width=\"100%\"><br>\n        <strong>Feature Two</strong><br>\n        Description of feature two.\n      </td>\n    </tr>\n  </table>\n</div>\n"
         },
         {
             "id": "roadmap",
             "name": "Project Roadmap",
-            "template": "## Roadmap\n- [x] Initial Release\n- [x] Enhanced UI components\n- [/] Badge Studio customization\n- [ ] Mobile application support\n- [ ] API integration\n"
+            "template": "## Roadmap\n\n- [x] Initial Release\n- [x] Enhanced UI components\n- [ ] Feature in progress\n- [ ] Upcoming feature\n- [ ] Future consideration\n\nSee the [open issues](https://github.com/[USER]/[REPO]/issues) for a full list of proposed features.\n"
         },
         {
             "id": "faq",
             "name": "FAQ (Collapsible)",
-            "template": "## FAQ\n<details>\n<summary>How do I install this?</summary>\nFollow the <strong>Installation</strong> section above!\n</details>\n<details>\n<summary>Is this free to use?</summary>\nYes, this project is licensed under the MIT License.\n</details>\n"
+            "template": "## FAQ\n\n<details>\n<summary><strong>How do I install this?</strong></summary>\n\nFollow the [Installation](#installation) section above!\n\n</details>\n\n<details>\n<summary><strong>Is this free to use?</strong></summary>\n\nYes, this project is licensed under the MIT License.\n\n</details>\n\n<details>\n<summary><strong>How can I contribute?</strong></summary>\n\nSee [Contributing](#contributing) for guidelines on how to help.\n\n</details>\n"
         },
         {
             "id": "stats",
             "name": "GitHub Stats",
-            "template": "## GitHub Stats\n![[USER]'s GitHub stats](https://github-readme-stats.vercel.app/api?username=[USER]&show_icons=true&theme=github_dark)\n![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=[USER]&layout=compact&theme=github_dark)\n"
+            "template": "## GitHub Stats\n\n<p align=\"center\">\n  <img src=\"https://github-readme-stats.vercel.app/api?username=[USER]&show_icons=true&theme=github_dark\" alt=\"GitHub Stats\" />\n</p>\n\n<p align=\"center\">\n  <img src=\"https://github-readme-stats.vercel.app/api/top-langs/?username=[USER]&layout=compact&theme=github_dark\" alt=\"Top Languages\" />\n</p>\n"
+        },
+        {
+            "id": "screenshots",
+            "name": "Screenshots",
+            "template": "## Screenshots\n\n<p align=\"center\">\n  <img src=\"./assets/screenshot-1.png\" alt=\"Screenshot 1\" width=\"80%\">\n</p>\n\n<p align=\"center\">\n  <img src=\"./assets/screenshot-2.png\" alt=\"Screenshot 2\" width=\"80%\">\n</p>\n\n<details>\n<summary>More Screenshots</summary>\n\n<p align=\"center\">\n  <img src=\"./assets/screenshot-3.png\" alt=\"Screenshot 3\" width=\"80%\">\n</p>\n\n</details>\n"
+        },
+        {
+            "id": "demo-gif",
+            "name": "Demo GIF",
+            "template": "## Demo\n\n<p align=\"center\">\n  <img src=\"./assets/demo.gif\" alt=\"Demo\" width=\"80%\">\n</p>\n\n> Replace with your own screen recording or animated GIF\n"
+        },
+        {
+            "id": "divider",
+            "name": "Divider",
+            "template": "<div align=\"center\">\n\n---\n\n**[⬆ Back to Top](#[REPO])**\n\n</div>\n"
+        },
+        {
+            "id": "callout-note",
+            "name": "Note Callout",
+            "template": "> [!NOTE]\n> This is a note callout. Use it to highlight important information.\n"
+        },
+        {
+            "id": "callout-warning",
+            "name": "Warning Callout",
+            "template": "> [!WARNING]\n> This is a warning callout. Use it to highlight potential issues.\n"
+        },
+        {
+            "id": "callout-tip",
+            "name": "Tip Callout",
+            "template": "> [!TIP]\n> This is a tip callout. Use it to share helpful advice.\n"
+        },
+        {
+            "id": "callout-important",
+            "name": "Important Callout",
+            "template": "> [!IMPORTANT]\n> This is an important callout. Use it for critical information.\n"
+        },
+        {
+            "id": "quote",
+            "name": "Quote Block",
+            "template": "> *\"Your inspiring quote goes here.\"*\n>\n> — Author Name\n"
+        },
+        {
+            "id": "features-list",
+            "name": "Features List",
+            "template": "## Features\n\n✅ Feature one with description  \n✅ Feature two with description  \n✅ Feature three with description  \n✅ Feature four with description  \n🚧 Feature in development  \n📋 Planned feature  \n"
         }
     ]
 }

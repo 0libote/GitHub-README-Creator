@@ -179,31 +179,19 @@
                 <!-- Editor -->
                 <div class="w-full lg:w-1/2 p-4 flex flex-col gap-4 border-r border-github-border">
                     <!-- Badge Controls (hidden by default) -->
-                    <div id="badge-controls" class="hidden space-y-4">
-                        <div class="grid grid-cols-2 gap-3">
-                            <div data-field="label">
+                    <div id="badge-controls" class="hidden space-y-3">
+                        <div class="flex flex-wrap gap-3">
+                            <div data-field="label" class="badge-field flex-1 min-w-[140px]">
                                 <label class="text-xs text-github-muted block mb-1">Label</label>
                                 <input type="text" id="input-badge-label" placeholder="Build"
                                     class="w-full bg-github-canvas border border-github-border rounded px-2 py-1.5 text-sm outline-none focus:border-github-accent">
                             </div>
-                            <div data-field="value">
+                            <div data-field="value" class="badge-field flex-1 min-w-[140px]">
                                 <label class="text-xs text-github-muted block mb-1">Value</label>
                                 <input type="text" id="input-badge-value" placeholder="Passing"
                                     class="w-full bg-github-canvas border border-github-border rounded px-2 py-1.5 text-sm outline-none focus:border-github-accent">
                             </div>
-                        </div>
-                        <div class="grid grid-cols-3 gap-3">
-                            <div data-field="color">
-                                <label class="text-xs text-github-muted block mb-1">Color</label>
-                                <input type="color" id="input-badge-color" value="#238636"
-                                    class="w-full h-8 bg-github-canvas border border-github-border rounded cursor-pointer p-0.5">
-                            </div>
-                            <div data-field="labelColor">
-                                <label class="text-xs text-github-muted block mb-1">Label Color</label>
-                                <input type="color" id="input-badge-label-color" value="#555555"
-                                    class="w-full h-8 bg-github-canvas border border-github-border rounded cursor-pointer p-0.5">
-                            </div>
-                            <div data-field="style">
+                            <div data-field="style" class="badge-field flex-1 min-w-[120px]">
                                 <label class="text-xs text-github-muted block mb-1">Style</label>
                                 <select id="input-badge-style"
                                     class="w-full bg-github-canvas border border-github-border rounded px-2 py-1.5 text-sm outline-none cursor-pointer">
@@ -215,13 +203,23 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="grid grid-cols-2 gap-3">
-                            <div data-field="logo">
+                        <div class="flex flex-wrap gap-3">
+                            <div data-field="color" class="badge-field w-20">
+                                <label class="text-xs text-github-muted block mb-1">Color</label>
+                                <input type="color" id="input-badge-color" value="#238636"
+                                    class="w-full h-8 bg-github-canvas border border-github-border rounded cursor-pointer p-0.5">
+                            </div>
+                            <div data-field="labelColor" class="badge-field w-20">
+                                <label class="text-xs text-github-muted block mb-1">Label Color</label>
+                                <input type="color" id="input-badge-label-color" value="#555555"
+                                    class="w-full h-8 bg-github-canvas border border-github-border rounded cursor-pointer p-0.5">
+                            </div>
+                            <div data-field="logo" class="badge-field flex-1 min-w-[140px]">
                                 <label class="text-xs text-github-muted block mb-1">Logo (Simple Icons)</label>
-                                <input type="text" id="input-badge-logo" placeholder="e.g. github, typescript"
+                                <input type="text" id="input-badge-logo" placeholder="github, react..."
                                     class="w-full bg-github-canvas border border-github-border rounded px-2 py-1.5 text-sm outline-none focus:border-github-accent">
                             </div>
-                            <div data-field="logoColor">
+                            <div data-field="logoColor" class="badge-field flex-1 min-w-[100px]">
                                 <label class="text-xs text-github-muted block mb-1">Logo Color</label>
                                 <input type="text" id="input-badge-logo-color" placeholder="white"
                                     class="w-full bg-github-canvas border border-github-border rounded px-2 py-1.5 text-sm outline-none focus:border-github-accent">

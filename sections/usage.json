@@ -3,14 +3,49 @@
     "icon": "terminal",
     "items": [
         {
+            "id": "quick-start",
+            "name": "Quick Start",
+            "template": "## Quick Start\n\n```bash\ngit clone https://github.com/[USER]/[REPO].git\ncd [REPO]\nnpm install\nnpm start\n```\n\nThat's it! Open http://localhost:3000 in your browser.\n"
+        },
+        {
             "id": "install-npm",
             "name": "NPM Installation",
             "template": "## Installation\n\n```bash\n# Clone the repository\ngit clone https://github.com/[USER]/[REPO].git\n\n# Navigate to directory\ncd [REPO]\n\n# Install dependencies\nnpm install\n\n# Start development server\nnpm run dev\n```\n"
         },
         {
+            "id": "install-yarn",
+            "name": "Yarn Installation",
+            "template": "## Installation\n\n```bash\n# Clone the repository\ngit clone https://github.com/[USER]/[REPO].git\n\n# Navigate to directory  \ncd [REPO]\n\n# Install dependencies\nyarn install\n\n# Start development server\nyarn dev\n```\n"
+        },
+        {
+            "id": "install-docker",
+            "name": "Docker Installation",
+            "template": "## Docker Installation\n\n### Using Docker\n\n```bash\n# Build the image\ndocker build -t [REPO] .\n\n# Run the container\ndocker run -p 3000:3000 [REPO]\n```\n\n### Using Docker Compose\n\n```bash\n# Start all services\ndocker-compose up -d\n\n# View logs\ndocker-compose logs -f\n\n# Stop services\ndocker-compose down\n```\n"
+        },
+        {
+            "id": "prerequisites",
+            "name": "Prerequisites",
+            "template": "## Prerequisites\n\nBefore you begin, ensure you have the following installed:\n\n- **Node.js** (v18 or higher) - [Download](https://nodejs.org/)\n- **npm** or **yarn** - Package manager\n- **Git** - [Download](https://git-scm.com/)\n\nOptional:\n- **Docker** - For containerized deployment\n- **VS Code** - Recommended editor\n"
+        },
+        {
             "id": "usage",
             "name": "Usage Example",
             "template": "## Usage\n\n```javascript\nimport { example } from '[REPO]';\n\n// Basic usage\nconst result = example({\n  option: 'value'\n});\n\nconsole.log(result);\n```\n"
+        },
+        {
+            "id": "usage-cli",
+            "name": "CLI Usage",
+            "template": "## Usage\n\n### Command Line\n\n```bash\n# Basic usage\n[REPO] <input>\n\n# With options\n[REPO] --option value input.txt\n\n# Show help\n[REPO] --help\n```\n\n### Options\n\n| Flag | Description | Default |\n|------|-------------|---------|\n| `-o, --output` | Output file path | stdout |\n| `-v, --verbose` | Enable verbose output | false |\n| `-h, --help` | Show help | - |\n"
+        },
+        {
+            "id": "running-tests",
+            "name": "Running Tests",
+            "template": "## Running Tests\n\n```bash\n# Run all tests\nnpm test\n\n# Run tests with coverage\nnpm run test:coverage\n\n# Run tests in watch mode\nnpm run test:watch\n\n# Run specific test file\nnpm test -- path/to/test.js\n```\n"
+        },
+        {
+            "id": "build-deploy",
+            "name": "Build & Deploy",
+            "template": "## Build & Deploy\n\n### Build for Production\n\n```bash\n# Create production build\nnpm run build\n\n# Preview production build\nnpm run preview\n```\n\n### Deployment\n\n**Vercel:**\n```bash\nnpx vercel\n```\n\n**Netlify:**\n```bash\nnpx netlify deploy --prod\n```\n\n**GitHub Pages:**\n```bash\nnpm run deploy\n```\n"
         }
     ]
 }

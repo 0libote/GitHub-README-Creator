@@ -13,9 +13,29 @@
             "template": "# [TITLE]\n\n> A brief tagline describing what [REPO] does.\n"
         },
         {
+            "id": "logo-header",
+            "name": "Logo Header",
+            "template": "<p align=\"center\">\n  <img src=\"./assets/logo.png\" alt=\"[TITLE] Logo\" width=\"120\">\n</p>\n\n<h1 align=\"center\">[TITLE]</h1>\n\n<p align=\"center\">\n  <strong>Your project tagline here</strong>\n</p>\n\n<p align=\"center\">\n  <a href=\"https://github.com/[USER]/[REPO]/stargazers\"><img src=\"https://img.shields.io/github/stars/[USER]/[REPO]?style=flat-square\" alt=\"Stars\"></a>\n  <a href=\"https://github.com/[USER]/[REPO]/network/members\"><img src=\"https://img.shields.io/github/forks/[USER]/[REPO]?style=flat-square\" alt=\"Forks\"></a>\n  <a href=\"https://github.com/[USER]/[REPO]/issues\"><img src=\"https://img.shields.io/github/issues/[USER]/[REPO]?style=flat-square\" alt=\"Issues\"></a>\n  <a href=\"https://github.com/[USER]/[REPO]/blob/main/LICENSE\"><img src=\"https://img.shields.io/github/license/[USER]/[REPO]?style=flat-square\" alt=\"License\"></a>\n</p>\n"
+        },
+        {
+            "id": "minimal-header",
+            "name": "Minimal Header",
+            "template": "# [TITLE]\n\nA concise description of what this project does and who it's for.\n"
+        },
+        {
+            "id": "hero-section",
+            "name": "Hero Section",
+            "template": "<div align=\"center\">\n\n# [TITLE]\n\n### Your powerful tagline goes here\n\n[**Get Started**](#installation) · [**Documentation**](#usage) · [**Report Bug**](https://github.com/[USER]/[REPO]/issues)\n\n<img src=\"https://via.placeholder.com/800x400/0d1117/2f81f7?text=Screenshot\" alt=\"[TITLE] Screenshot\" width=\"80%\">\n\n</div>\n"
+        },
+        {
             "id": "about",
             "name": "About Section",
             "template": "## About\n\n**[TITLE]** is designed to solve [describe problem]. Built with a focus on simplicity and developer experience.\n\n### Key Features\n\n- Feature one description\n- Feature two description\n- Feature three description\n"
+        },
+        {
+            "id": "quick-links",
+            "name": "Quick Links Header",
+            "template": "# [TITLE]\n\n<p align=\"center\">\n  <a href=\"#installation\">Installation</a> •\n  <a href=\"#usage\">Usage</a> •\n  <a href=\"#documentation\">Docs</a> •\n  <a href=\"#contributing\">Contributing</a> •\n  <a href=\"#license\">License</a>\n</p>\n\n---\n\nBrief description of your project.\n"
         }
     ]
 }

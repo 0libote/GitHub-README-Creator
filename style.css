@@ -440,3 +440,18 @@ aside {
 #preview-pane {
     animation: fadeInSlide 0.7s ease-out;
 }
+
+/* Badge Controls Dynamic Layout */
+#badge-controls .badge-field {
+    transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+#badge-controls .badge-field.hidden {
+    display: none !important;
+}
+
+/* Hide empty flex rows when all children are hidden */
+#badge-controls>div:empty,
+#badge-controls>div:not(:has(.badge-field:not(.hidden))) {
+    display: none;
+}

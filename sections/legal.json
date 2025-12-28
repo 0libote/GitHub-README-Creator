@@ -5,12 +5,42 @@
         {
             "id": "license-mit",
             "name": "MIT License",
-            "template": "## License\nThis project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.\n"
+            "template": "## License\n\nThis project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.\n"
         },
         {
             "id": "license-apache",
             "name": "Apache 2.0",
-            "template": "## License\nLicensed under the Apache License, Version 2.0 (the \"License\"); you may not use this file except in compliance with the License. You may obtain a copy of the License at [http://www.apache.org/licenses/LICENSE-2.0](http://www.apache.org/licenses/LICENSE-2.0).\n"
+            "template": "## License\n\nLicensed under the Apache License, Version 2.0. See [LICENSE](LICENSE) for details.\n"
+        },
+        {
+            "id": "license-gpl",
+            "name": "GPL-3.0",
+            "template": "## License\n\nThis project is licensed under the GNU General Public License v3.0 - see the [LICENSE](LICENSE) file for details.\n"
+        },
+        {
+            "id": "license-isc",
+            "name": "ISC License",
+            "template": "## License\n\nThis project is licensed under the ISC License - see the [LICENSE](LICENSE) file for details.\n"
+        },
+        {
+            "id": "license-bsd",
+            "name": "BSD 3-Clause",
+            "template": "## License\n\nThis project is licensed under the BSD 3-Clause License - see the [LICENSE](LICENSE) file for details.\n"
+        },
+        {
+            "id": "disclaimer",
+            "name": "Disclaimer",
+            "template": "## Disclaimer\n\nThis software is provided \"as is\", without warranty of any kind, express or implied. Use at your own risk.\n\nThe authors are not responsible for any damages or losses arising from the use of this software.\n"
+        },
+        {
+            "id": "privacy",
+            "name": "Privacy Notice",
+            "template": "## Privacy\n\nThis project respects your privacy:\n\n- No personal data is collected\n- No tracking or analytics\n- No data is shared with third parties\n\nFor more information, see our [Privacy Policy](PRIVACY.md).\n"
+        },
+        {
+            "id": "security",
+            "name": "Security Policy",
+            "template": "## Security\n\nIf you discover a security vulnerability, please report it responsibly:\n\n1. **Do not** open a public issue\n2. Email: security@example.com\n3. Include detailed steps to reproduce\n\nSee [SECURITY.md](SECURITY.md) for our full security policy.\n"
         }
     ]
 }
