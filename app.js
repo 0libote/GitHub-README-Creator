@@ -37,7 +37,7 @@ function updatePreview() {
     App.ui.charCount.textContent = `${raw.length} chars`;
 
     // Save draft
-    Utils.storage.set('readme_draft_v4', raw);
+    Utils.storage.set('readme_draft_v6', raw);
 }
 
 /**
@@ -57,7 +57,7 @@ function renderSidebar() {
                 <span class="section-title">${category.name}</span>
                 <i data-lucide="chevron-down" class="section-chevron"></i>
             </div>
-            <div class="section-items" style="max-height: 500px;"></div>
+            <div class="section-items" style="max-height: 1500px;"></div>
         `;
 
         const itemsContainer = group.querySelector('.section-items');
@@ -96,13 +96,13 @@ async function loadSections() {
     try {
         App.ui.sectionsList.innerHTML = '<div class="p-4 text-xs text-github-muted">Loading components...</div>';
 
-        // Fetch manifest first
-        const manifestRes = await fetch('sections/manifest.json');
+        // Fetch manifest first with cache busting
+        const manifestRes = await fetch(`sections/manifest.json?t=${Date.now()}`);
         const manifest = await manifestRes.json();
 
-        // Fetch all categories in parallel
+        // Fetch all categories in parallel with cache busting
         const categoryPromises = manifest.categories.map(file =>
-            fetch(`sections/${file}`).then(res => res.json())
+            fetch(`sections/${file}?t=${Date.now()}`).then(res => res.json())
         );
 
         App.sections = await Promise.all(categoryPromises);
@@ -430,7 +430,7 @@ function init() {
     }
 
     // Load saved draft or default
-    const draft = Utils.storage.get('readme_draft_v4');
+    const draft = Utils.storage.get('readme_draft_v6');
     if (draft) {
         App.ui.editor.value = draft;
     } else {
@@ -484,7 +484,7 @@ Quickly build your professional \`README.md\` by selecting components from the s
     App.ui.clearBtn.addEventListener('click', () => {
         if (confirm('Clear the current draft? This cannot be undone.')) {
             App.ui.editor.value = '';
-            Utils.storage.remove('readme_draft_v4');
+            Utils.storage.remove('readme_draft_v6');
             updatePreview();
             showToast('Draft cleared');
         }
