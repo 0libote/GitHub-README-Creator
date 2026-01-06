@@ -30,6 +30,9 @@
         {
             "id": "architecture",
             "name": "Architecture",
+            "fields": [
+                "repo"
+            ],
             "template": "## Architecture\n\n```\n[REPO]/\n├── src/\n│   ├── components/     # UI components\n│   ├── services/       # Business logic\n│   ├── utils/          # Helper functions\n│   └── index.js        # Entry point\n├── tests/              # Test files\n├── docs/               # Documentation\n└── config/             # Configuration files\n```\n\n### Key Components\n\n- **Component A** - Description of responsibility\n- **Component B** - Description of responsibility\n- **Component C** - Description of responsibility\n"
         },
         {

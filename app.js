@@ -47,8 +47,28 @@ function renderSidebar() {
     App.ui.sectionsList.innerHTML = '';
 
     App.sections.forEach((category, index) => {
+<<<<<<< Updated upstream
         const group = document.createElement('div');
         const isCollapsed = App.collapsedSections[category.name] || false;
+=======
+        // Filter items based on search
+        const filteredItems = category.items.filter(item => {
+            if (!App.searchQuery) return true;
+            return item.name.toLowerCase().includes(App.searchQuery) ||
+                category.name.toLowerCase().includes(App.searchQuery);
+        });
+
+        if (filteredItems.length === 0) return;
+        hasResults = true;
+
+        const group = document.createElement('div');
+        // Default to collapsed (true) if not explicitly set to false
+        // If searching, always expand
+        let isCollapsed = App.collapsedSections[category.name];
+        if (isCollapsed === undefined) isCollapsed = true; // Default closed
+        if (App.searchQuery) isCollapsed = false; // Always open when searching
+
+>>>>>>> Stashed changes
         group.className = `section-group ${isCollapsed ? 'collapsed' : ''}`;
 
         group.innerHTML = `
@@ -65,6 +85,11 @@ function renderSidebar() {
 
         header.addEventListener('click', () => {
             const nowCollapsed = !group.classList.contains('collapsed');
+<<<<<<< Updated upstream
+=======
+
+            // If we are searching and click, just toggle regular logic
+>>>>>>> Stashed changes
             group.classList.toggle('collapsed');
             App.collapsedSections[category.name] = nowCollapsed;
 
@@ -116,14 +141,53 @@ async function loadSections() {
 /**
  * Open the modal with a section template
  */
+<<<<<<< Updated upstream
+=======
+/**
+ * Field Definitions for Badge Studio & Components
+ */
+const FIELD_DEFINITIONS = {
+    // Styles
+    style: {
+        type: 'select',
+        label: 'Style',
+        options: [
+            { value: 'for-the-badge', label: 'For the Badge' },
+            { value: 'flat', label: 'Flat' },
+            { value: 'flat-square', label: 'Flat Square' },
+            { value: 'plastic', label: 'Plastic' },
+            { value: 'social', label: 'Social' }
+        ]
+    },
+    // Colors
+    color: { type: 'color', label: 'Color', default: '#238636' },
+    labelColor: { type: 'color', label: 'Label Color', default: '#333333' },
+    logoColor: { type: 'text', label: 'Logo Color (Name/Hex)', placeholder: 'white' },
+    // Text
+    label: { type: 'text', label: 'Label', placeholder: 'Build' },
+    value: { type: 'text', label: 'Value', placeholder: 'Passing' },
+    logo: { type: 'text', label: 'Logo (Simple Icons)', placeholder: 'github' },
+    // Fallback
+    default: { type: 'text' }
+};
+
+/**
+ * Open the modal with a section template
+ */
+>>>>>>> Stashed changes
 function openModal(item, category) {
     App.currentSection = { ...item, isBadge: category.isBadgeStudio };
 
     App.ui.modalTitle.textContent = item.name;
     App.ui.modalIcon.setAttribute('data-lucide', category.icon);
 
+<<<<<<< Updated upstream
     if (category.isBadgeStudio) {
         App.ui.badgeControls.classList.remove('hidden');
+=======
+    // Initialize Dynamic Inputs
+    initDynamicInputs(item);
+>>>>>>> Stashed changes
 
         // Toggle individual fields
         const fields = item.fields || [];
@@ -157,6 +221,134 @@ function openModal(item, category) {
 }
 
 /**
+<<<<<<< Updated upstream
+=======
+ * Initialize dynamic field inputs based on configuration or template
+ */
+function initDynamicInputs(item) {
+    const container = document.getElementById('dynamic-inputs');
+    container.innerHTML = '';
+
+    // Determine fields: use explicit config if available, otherwise detect from template
+    let fields = [];
+
+    if (item.fields && Array.isArray(item.fields)) {
+        fields = item.fields;
+    } else {
+        // Fallback: Regex detection
+        const regex = /\[([A-Z0-9_]+)\]/g;
+        const found = new Set();
+        let match;
+        while ((match = regex.exec(item.template)) !== null) {
+            found.add(match[1]); // e.g., TITLE, USER
+        }
+        // Filter out global vars from auto-generation if not desired, 
+        // but for now we keep them to allow override.
+        fields = Array.from(found);
+    }
+
+    if (fields.length === 0) {
+        container.innerHTML = '<div class="text-xs text-github-muted p-2">No customizable fields. Edit markdown directly.</div>';
+        App.ui.modalEditor.value = item.template;
+        return;
+    }
+
+    fields.forEach(fieldKey => {
+        // Handle case-insensitivity: config uses 'label', regex finds 'LABEL'
+        const key = fieldKey.toLowerCase();
+        const varName = fieldKey.toUpperCase(); // We'll map back to [VAR]
+
+        const def = FIELD_DEFINITIONS[key] || { ...FIELD_DEFINITIONS.default, label: varName.replace(/_/g, ' ') };
+
+        const wrapper = document.createElement('div');
+        wrapper.className = 'dynamic-field-group';
+
+        const label = document.createElement('label');
+        label.className = 'dynamic-field-label';
+        label.textContent = def.label;
+
+        let input;
+
+        if (def.type === 'select') {
+            input = document.createElement('select');
+            input.className = 'dynamic-field-input cursor-pointer';
+            def.options.forEach(opt => {
+                const option = document.createElement('option');
+                option.value = opt.value;
+                option.textContent = opt.label;
+                input.appendChild(option);
+            });
+        } else if (def.type === 'color') {
+            // Color input requires flexible wrapper or specific styling
+            wrapper.classList.add('flex', 'items-center', 'justify-between');
+            label.classList.add('mb-0');
+
+            input = document.createElement('input');
+            input.type = 'color';
+            input.className = 'w-16 h-8 bg-github-canvas border border-github-border rounded cursor-pointer p-0.5';
+            input.value = def.default || '#000000';
+        } else {
+            input = document.createElement('input');
+            input.type = 'text';
+            input.className = 'dynamic-field-input';
+            if (def.placeholder) input.placeholder = def.placeholder;
+        }
+
+        // Set attributes
+        input.setAttribute('data-target-var', varName);
+        input.setAttribute('data-field-type', def.type);
+
+        // Pre-fill logic (Globals overrides defaults)
+        if (varName === 'USER' && App.vars.user) input.value = App.vars.user;
+        if (varName === 'REPO' && App.vars.repo) input.value = App.vars.repo;
+        if (varName === 'TITLE' && App.vars.title) input.value = App.vars.title;
+
+        // Listener
+        input.addEventListener('input', () => syncFromInputs());
+
+        wrapper.appendChild(label);
+        wrapper.appendChild(input);
+        container.appendChild(wrapper);
+    });
+}
+
+/**
+ * Sync from dynamic inputs to editor and preview
+ */
+function syncFromInputs() {
+    let template = App.currentSection.template;
+    const inputs = document.querySelectorAll('#dynamic-inputs input, #dynamic-inputs select');
+
+    // First, auto-inject globals (base layer)
+    template = Utils.injectVariables(template, App.vars);
+
+    inputs.forEach(input => {
+        const varName = input.getAttribute('data-target-var');
+        let value = input.value;
+        const type = input.getAttribute('data-field-type');
+
+        // Logic for specific types
+        if (type === 'color') {
+            value = value.replace('#', ''); // Badges use hex without hash
+        } else if (type === 'text' || type === 'select') {
+            // URL Encode value if it's going into a URL structure (checking if context is URL-like is hard, generally safe to encode for badges)
+            // simplified: we always encode, but `logo` might be simple-icons name (no special chars usually)
+            // `for-the-badge` etc are safe.
+            // Crucial: Use encodeURIComponent for user text input
+            value = encodeURIComponent(value);
+        }
+
+        // Replace all instances
+        const regex = new RegExp(`\\[${varName}\\]`, 'gi');
+        template = template.replace(regex, value);
+    });
+
+    App.ui.modalEditor.value = template;
+    syncModalPreview();
+}
+
+/**
+>>>>>>> Stashed changes
  * Close the modal with animation
  */
 function closeModal() {
@@ -397,6 +589,7 @@ function init() {
 
         // Badge controls
         badgeControls: document.getElementById('badge-controls'),
+<<<<<<< Updated upstream
         badgeLabel: document.getElementById('input-badge-label'),
         badgeValue: document.getElementById('input-badge-value'),
         badgeColor: document.getElementById('input-badge-color'),
@@ -404,6 +597,11 @@ function init() {
         badgeLogo: document.getElementById('input-badge-logo'),
         badgeLogoColor: document.getElementById('input-badge-logo-color'),
         badgeStyle: document.getElementById('input-badge-style'),
+=======
+
+        // Search
+        searchInput: document.getElementById('component-search'),
+>>>>>>> Stashed changes
 
         // Layout elements
         dragHandle: document.getElementById('drag-handle'),

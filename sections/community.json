@@ -10,11 +10,18 @@
         {
             "id": "contributing-detailed",
             "name": "Contributing (Detailed)",
+            "fields": [
+                "repo"
+            ],
             "template": "## Contributing\n\nWe love contributions! Here's how you can help:\n\n### Getting Started\n\n1. Fork the repository\n2. Clone your fork: `git clone https://github.com/YOUR_USERNAME/[REPO].git`\n3. Create a branch: `git checkout -b feature/your-feature`\n\n### Development Guidelines\n\n- Follow the existing code style\n- Write meaningful commit messages\n- Add tests for new features\n- Update documentation as needed\n\n### Submitting Changes\n\n1. Push to your fork\n2. Open a Pull Request with a clear description\n3. Wait for review and address feedback\n\nSee [CONTRIBUTING.md](CONTRIBUTING.md) for more details.\n"
         },
         {
             "id": "authors",
             "name": "Authors & Credits",
+            "fields": [
+                "user",
+                "repo"
+            ],
             "template": "## Authors\n\n- **@[USER]** - *Initial work* - [GitHub](https://github.com/[USER])\n\nSee the list of [contributors](https://github.com/[USER]/[REPO]/contributors) who participated in this project.\n"
         },
         {
@@ -25,16 +32,27 @@
         {
             "id": "support",
             "name": "Support",
+            "fields": [
+                "user",
+                "repo"
+            ],
             "template": "## Support\n\nNeed help? Here's how to get support:\n\n- 📖 Check the [Documentation](#documentation)\n- 💬 Join our [Discussions](https://github.com/[USER]/[REPO]/discussions)\n- 🐛 Report bugs via [Issues](https://github.com/[USER]/[REPO]/issues)\n- 📧 Email: your-email@example.com\n"
         },
         {
             "id": "acknowledgments",
             "name": "Acknowledgments",
+            "fields": [
+                "user",
+                "repo"
+            ],
             "template": "## Acknowledgments\n\n- [Library Name](https://link.com) - Description of what it's used for\n- Inspiration from [Project](https://link.com)\n- Thanks to all [contributors](https://github.com/[USER]/[REPO]/graphs/contributors)\n"
         },
         {
             "id": "sponsors",
             "name": "Sponsors",
+            "fields": [
+                "user"
+            ],
             "template": "## Sponsors\n\nThis project is supported by:\n\n<p align=\"center\">\n  <a href=\"https://github.com/sponsors/[USER]\">\n    <img src=\"https://img.shields.io/badge/Sponsor-❤-ea4aaa?style=for-the-badge\" alt=\"Sponsor\">\n  </a>\n</p>\n\nBecome a sponsor to support ongoing development!\n\n- [GitHub Sponsors](https://github.com/sponsors/[USER])\n- [Ko-fi](https://ko-fi.com/username)\n- [Buy Me a Coffee](https://buymeacoffee.com/username)\n"
         }
     ]

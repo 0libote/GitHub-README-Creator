@@ -10,6 +10,10 @@
         {
             "id": "roadmap",
             "name": "Project Roadmap",
+            "fields": [
+                "user",
+                "repo"
+            ],
             "template": "## Roadmap\n\n- [x] Initial Release\n- [x] Enhanced UI components\n- [ ] Feature in progress\n- [ ] Upcoming feature\n- [ ] Future consideration\n\nSee the [open issues](https://github.com/[USER]/[REPO]/issues) for a full list of proposed features.\n"
         },
         {
@@ -20,6 +24,9 @@
         {
             "id": "stats",
             "name": "GitHub Stats",
+            "fields": [
+                "user"
+            ],
             "template": "## GitHub Stats\n\n<p align=\"center\">\n  <img src=\"https://github-readme-stats.vercel.app/api?username=[USER]&show_icons=true&theme=github_dark\" alt=\"GitHub Stats\" />\n</p>\n\n<p align=\"center\">\n  <img src=\"https://github-readme-stats.vercel.app/api/top-langs/?username=[USER]&layout=compact&theme=github_dark\" alt=\"Top Languages\" />\n</p>\n"
         },
         {
@@ -35,6 +42,9 @@
         {
             "id": "divider",
             "name": "Divider",
+            "fields": [
+                "repo"
+            ],
             "template": "<div align=\"center\">\n\n---\n\n**[⬆ Back to Top](#[REPO])**\n\n</div>\n"
         },
         {
