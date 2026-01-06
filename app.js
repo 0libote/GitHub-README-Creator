@@ -43,14 +43,13 @@ function updatePreview() {
 /**
  * Render the sidebar with section categories
  */
+/**
+ * Render the sidebar with section categories
+ */
 function renderSidebar() {
     App.ui.sectionsList.innerHTML = '';
 
     App.sections.forEach((category, index) => {
-<<<<<<< Updated upstream
-        const group = document.createElement('div');
-        const isCollapsed = App.collapsedSections[category.name] || false;
-=======
         // Filter items based on search
         const filteredItems = category.items.filter(item => {
             if (!App.searchQuery) return true;
@@ -59,7 +58,6 @@ function renderSidebar() {
         });
 
         if (filteredItems.length === 0) return;
-        hasResults = true;
 
         const group = document.createElement('div');
         // Default to collapsed (true) if not explicitly set to false
@@ -68,7 +66,6 @@ function renderSidebar() {
         if (isCollapsed === undefined) isCollapsed = true; // Default closed
         if (App.searchQuery) isCollapsed = false; // Always open when searching
 
->>>>>>> Stashed changes
         group.className = `section-group ${isCollapsed ? 'collapsed' : ''}`;
 
         group.innerHTML = `
@@ -85,11 +82,7 @@ function renderSidebar() {
 
         header.addEventListener('click', () => {
             const nowCollapsed = !group.classList.contains('collapsed');
-<<<<<<< Updated upstream
-=======
 
-            // If we are searching and click, just toggle regular logic
->>>>>>> Stashed changes
             group.classList.toggle('collapsed');
             App.collapsedSections[category.name] = nowCollapsed;
 
@@ -97,7 +90,7 @@ function renderSidebar() {
             Utils.storage.set('collapsed_sections', JSON.stringify(App.collapsedSections));
         });
 
-        category.items.forEach(item => {
+        filteredItems.forEach(item => {
             const button = document.createElement('button');
             button.className = 'section-btn';
             button.textContent = item.name;
@@ -141,8 +134,6 @@ async function loadSections() {
 /**
  * Open the modal with a section template
  */
-<<<<<<< Updated upstream
-=======
 /**
  * Field Definitions for Badge Studio & Components
  */
@@ -163,10 +154,21 @@ const FIELD_DEFINITIONS = {
     color: { type: 'color', label: 'Color', default: '#238636' },
     labelColor: { type: 'color', label: 'Label Color', default: '#333333' },
     logoColor: { type: 'text', label: 'Logo Color (Name/Hex)', placeholder: 'white' },
+
     // Text
     label: { type: 'text', label: 'Label', placeholder: 'Build' },
     value: { type: 'text', label: 'Value', placeholder: 'Passing' },
     logo: { type: 'text', label: 'Logo (Simple Icons)', placeholder: 'github' },
+
+    // Global/Standard
+    title: { type: 'text', label: 'Project Title' },
+    user: { type: 'text', label: 'GitHub Username' },
+    repo: { type: 'text', label: 'Repository Name' },
+
+    // Specific
+    icons: { type: 'text', label: 'Icons List (comma separated)', placeholder: 'react,ts,nodejs...' },
+    problem_description: { type: 'textarea', label: 'Problem Description', placeholder: 'Describe the problem your project solves...' },
+
     // Fallback
     default: { type: 'text' }
 };
@@ -174,39 +176,16 @@ const FIELD_DEFINITIONS = {
 /**
  * Open the modal with a section template
  */
->>>>>>> Stashed changes
 function openModal(item, category) {
-    App.currentSection = { ...item, isBadge: category.isBadgeStudio };
-
+    App.currentSection = { ...item };
     App.ui.modalTitle.textContent = item.name;
     App.ui.modalIcon.setAttribute('data-lucide', category.icon);
 
-<<<<<<< Updated upstream
-    if (category.isBadgeStudio) {
-        App.ui.badgeControls.classList.remove('hidden');
-=======
     // Initialize Dynamic Inputs
     initDynamicInputs(item);
->>>>>>> Stashed changes
 
-        // Toggle individual fields
-        const fields = item.fields || [];
-        App.ui.badgeControls.querySelectorAll('[data-field]').forEach(container => {
-            const fieldName = container.getAttribute('data-field');
-            if (fields.includes(fieldName)) {
-                container.classList.remove('hidden');
-            } else {
-                container.classList.add('hidden');
-            }
-        });
-
-        syncBadge();
-    } else {
-        App.ui.badgeControls.classList.add('hidden');
-        App.ui.modalEditor.value = Utils.injectVariables(item.template, App.vars);
-    }
-
-    syncModalPreview();
+    // Initial Sync
+    syncFromInputs();
 
     // Show modal with animation
     App.ui.modal.classList.remove('hidden');
@@ -221,8 +200,7 @@ function openModal(item, category) {
 }
 
 /**
-<<<<<<< Updated upstream
-=======
+/**
  * Initialize dynamic field inputs based on configuration or template
  */
 function initDynamicInputs(item) {
@@ -242,8 +220,6 @@ function initDynamicInputs(item) {
         while ((match = regex.exec(item.template)) !== null) {
             found.add(match[1]); // e.g., TITLE, USER
         }
-        // Filter out global vars from auto-generation if not desired, 
-        // but for now we keep them to allow override.
         fields = Array.from(found);
     }
 
@@ -287,6 +263,10 @@ function initDynamicInputs(item) {
             input.type = 'color';
             input.className = 'w-16 h-8 bg-github-canvas border border-github-border rounded cursor-pointer p-0.5';
             input.value = def.default || '#000000';
+        } else if (def.type === 'textarea') {
+            input = document.createElement('textarea');
+            input.className = 'dynamic-field-input min-h-[80px] resize-y custom-scrollbar';
+            if (def.placeholder) input.placeholder = def.placeholder;
         } else {
             input = document.createElement('input');
             input.type = 'text';
@@ -317,7 +297,7 @@ function initDynamicInputs(item) {
  */
 function syncFromInputs() {
     let template = App.currentSection.template;
-    const inputs = document.querySelectorAll('#dynamic-inputs input, #dynamic-inputs select');
+    const inputs = document.querySelectorAll('#dynamic-inputs input, #dynamic-inputs select, #dynamic-inputs textarea');
 
     // First, auto-inject globals (base layer)
     template = Utils.injectVariables(template, App.vars);
@@ -330,12 +310,24 @@ function syncFromInputs() {
         // Logic for specific types
         if (type === 'color') {
             value = value.replace('#', ''); // Badges use hex without hash
-        } else if (type === 'text' || type === 'select') {
-            // URL Encode value if it's going into a URL structure (checking if context is URL-like is hard, generally safe to encode for badges)
-            // simplified: we always encode, but `logo` might be simple-icons name (no special chars usually)
-            // `for-the-badge` etc are safe.
-            // Crucial: Use encodeURIComponent for user text input
-            value = encodeURIComponent(value);
+        } else if (type === 'text' || type === 'select' || type === 'textarea') {
+            // Encode if it seems dangerous, but textarea usually needs raw newlines preserved?
+            // Actually, for badges we encode. For markdown body text (textarea), we probably SHOULD NOT encodeURIComponent 
+            // because users want markdown.
+            // But wait, if they type "foo & bar", it should be "foo & bar" in MD.
+
+            // Refinement: Only encode if it's strictly a badge-like field or single line?
+            // "problem_description" -> [PROBLEM_DESCRIPTION] -> likely markdown block.
+            // "style" -> [STYLE] -> badge param -> needs encoding? (usually no special chars)
+
+            // Decision: Don't encode textarea content so markdown works.
+            // Do encode single-line text if it seems capable of breaking things? 
+            // The previous logic encoded everything.
+            // Let's refine: Textarea = no encode. Text/Select = encode (safer for badges).
+
+            if (type !== 'textarea') {
+                value = encodeURIComponent(value);
+            }
         }
 
         // Replace all instances
@@ -346,11 +338,8 @@ function syncFromInputs() {
     App.ui.modalEditor.value = template;
     syncModalPreview();
 }
-
-/**
->>>>>>> Stashed changes
  * Close the modal with animation
- */
+*/
 function closeModal() {
     App.ui.modal.style.opacity = '0';
     App.ui.modalWindow.style.transform = 'scale(0.95)';
@@ -361,35 +350,7 @@ function closeModal() {
     }, 200);
 }
 
-/**
- * Sync badge preview based on input controls
- */
-function syncBadge() {
-    const label = encodeURIComponent(App.ui.badgeLabel.value || 'Label');
-    const value = encodeURIComponent(App.ui.badgeValue.value || 'Value');
-    const color = App.ui.badgeColor.value.replace('#', '');
-    const labelColor = App.ui.badgeLabelColor.value.replace('#', '');
-    const logo = encodeURIComponent(App.ui.badgeLogo.value || '');
-    const logoColor = encodeURIComponent(App.ui.badgeLogoColor.value || '');
-    const style = App.ui.badgeStyle.value;
 
-    let template = App.currentSection.template;
-
-    // Auto-inject variables first
-    template = Utils.injectVariables(template, App.vars);
-
-    // Then inject badge metadata
-    template = template.replace(/\[LABEL\]/g, label || 'Label');
-    template = template.replace(/\[VALUE\]/g, value || 'Value');
-    template = template.replace(/\[COLOR\]/g, color || 'blue');
-    template = template.replace(/\[STYLE\]/g, style || 'flat');
-    template = template.replace(/\[LOGO\]/g, logo || '');
-    template = template.replace(/\[LOGO_COLOR\]/g, logoColor || 'white');
-    template = template.replace(/\[LABEL_COLOR\]/g, labelColor || '555');
-
-    App.ui.modalEditor.value = template;
-    syncModalPreview();
-}
 
 /**
  * Update modal preview
@@ -587,21 +548,11 @@ function init() {
         modalIcon: document.getElementById('modal-header-icon'),
         modalCopy: document.getElementById('action-modal-copy'),
 
-        // Badge controls
+        // Badge controls - Legacy container (hidden but kept to avoid null refs if any exist, though we don't use them anymore)
         badgeControls: document.getElementById('badge-controls'),
-<<<<<<< Updated upstream
-        badgeLabel: document.getElementById('input-badge-label'),
-        badgeValue: document.getElementById('input-badge-value'),
-        badgeColor: document.getElementById('input-badge-color'),
-        badgeLabelColor: document.getElementById('input-badge-label-color'),
-        badgeLogo: document.getElementById('input-badge-logo'),
-        badgeLogoColor: document.getElementById('input-badge-logo-color'),
-        badgeStyle: document.getElementById('input-badge-style'),
-=======
 
         // Search
         searchInput: document.getElementById('component-search'),
->>>>>>> Stashed changes
 
         // Layout elements
         dragHandle: document.getElementById('drag-handle'),
@@ -711,18 +662,7 @@ Quickly build your professional \`README.md\` by selecting components from the s
         showToast(success ? 'Copied to clipboard' : 'Copy failed');
     });
 
-    // Badge controls
-    [
-        App.ui.badgeLabel,
-        App.ui.badgeValue,
-        App.ui.badgeColor,
-        App.ui.badgeLabelColor,
-        App.ui.badgeLogo,
-        App.ui.badgeLogoColor,
-        App.ui.badgeStyle
-    ].forEach(el => {
-        if (el) el.addEventListener('input', syncBadge);
-    });
+
 
     // Initialize formatting toolbar
     initFormattingToolbar();
