@@ -26,7 +26,37 @@ body {
 
 /* Sidebar Sections */
 .section-group {
-    margin-bottom: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.section-group.collapsed {
+    margin-bottom: 0.125rem;
+}
+
+/* Sidebar Search */
+.sidebar-search {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background-color: var(--github-canvas);
+    padding: 0.5rem;
+    border-bottom: 1px solid var(--github-border);
+}
+
+.sidebar-search input {
+    width: 100%;
+    background-color: var(--github-header);
+    border: 1px solid var(--github-border);
+    color: var(--github-text);
+    padding: 0.375rem 0.75rem;
+    border-radius: 6px;
+    font-size: 13px;
+    transition: all 0.2s;
+}
+
+.sidebar-search input:focus {
+    background-color: var(--github-canvas);
+    border-color: var(--github-accent);
 }
 
 .section-header {
@@ -454,4 +484,33 @@ aside {
 #badge-controls>div:empty,
 #badge-controls>div:not(:has(.badge-field:not(.hidden))) {
     display: none;
+}
+
+/* Dynamic Modal Fields */
+.dynamic-field-group {
+    margin-bottom: 1rem;
+}
+
+.dynamic-field-label {
+    display: block;
+    font-size: 12px;
+    color: var(--github-muted);
+    margin-bottom: 0.375rem;
+    font-weight: 500;
+}
+
+.dynamic-field-input {
+    width: 100%;
+    background-color: var(--github-canvas);
+    border: 1px solid var(--github-border);
+    border-radius: 6px;
+    padding: 0.5rem 0.75rem;
+    font-size: 14px;
+    color: var(--github-text);
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.dynamic-field-input:focus {
+    border-color: var(--github-accent);
 }
